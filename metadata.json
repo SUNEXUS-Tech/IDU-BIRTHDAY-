@@ -1,0 +1,6 @@
+{
+  "name": "A November Tribute | IDU Dallas–Fort Worth",
+  "description": "A November birthday tribute celebrating the distinguished members of Ibadan Descendants Union, Dallas–Fort Worth Chapter.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
