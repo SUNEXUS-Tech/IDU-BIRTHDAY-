@@ -240,3 +240,42 @@ Integrated from archive `idudfw_celebrants_gallery_images.zip`:
 * **Balanced 2-Item Responsive Grid:** Added `.tribute-personal-gallery-grid.two-items` styling ensuring the two photographs form a centered, harmonious 2-column layout on desktop and tablet.
 * **Full-Screen Lightbox Carousel:** Dynamic image viewer with next/previous controls, responsive counter ("Photo 1 of 2"), title & caption strip, keyboard navigation (Escape, Left, Right), and mobile touch swipe gestures.
 * **Asset Organization:** Both `/public/assets/` and `/assets/` directories hold the original high-resolution JPG files, resolving seamlessly across Vite development and production builds.
+
+
+---
+
+## 12. Active Audio Replacement: Updated Official IDU Celebration Track
+
+* **New Source Track:** Uploaded file `IDU_Dallas_94a7fe10.m4a` (3:01 duration, 48 kHz stereo AAC).
+* **Celebrant Inclusion:** The updated soundtrack features bespoke vocal verses celebrating each of the three November honourees:
+  - Chief David Akinwale (Otun Baale of Akobo Ojurin & CEO, Providence Arena Group)
+  - Chief (Mrs.) Janet Apesinola (Yeye Apesinola of Ibadanland)
+  - Chief John Adeniji (Financial Secretary, IDU Dallas–Fort Worth Chapter)
+* **Replaced & Deleted Audio Assets:**
+  - Removed all previous active audio files across `/public/assets/`, `/assets/`, and subfolders.
+  - Placed the updated track as `/public/assets/IDUDFW-tribute.m4a` and `/assets/IDUDFW-tribute.m4a`.
+  - Generated a 256 kbps MP3 mirror (`IDUDFW-tribute.mp3`) via `ffmpeg` to ensure universal playback on legacy browsers and older operating systems.
+* **UI & Controller Synchronisation:**
+  - Total duration readouts updated to `3:01` in the primary music section player (`#time-total`).
+  - Progress bar seek calculations updated to the new 181.54s duration in `script.js`.
+  - All Play/Pause triggers (Floating Pill Player, Sticky Navigation Button, Hero CTA, and Section Player) automatically synchronize with the updated soundtrack.
+
+
+---
+
+## 13. Interactive Photo Gallery Modal for Profile Photos & Gallery Images
+
+* **Enlarged Profile Photo & Gallery Triggers:**
+  - **Individual Tribute Pages:** Each celebrant's official profile portrait in the left column (`.tribute-main-portrait-wrap`) is now an interactive trigger with an elegant "Click to Enlarge" badge and hover elevation. Clicking it opens the interactive photo gallery modal displaying the high-definition portrait, with seamless swipe-through into the celebrant's gallery photographs.
+  - **Homepage Celebrant Cards:** In the `#celebrants` section, each celebrant's portrait includes an interactive `Enlarge` button (`.portrait-expand-btn`). Clicking it opens the enlarged photo modal directly on the homepage, allowing visitors to swipe through all three celebrants' portraits. Clicking elsewhere on the card navigates directly to that celebrant's tribute page.
+  - **Personal Tribute Gallery Images:** All personal tribute gallery cards connect into the modal sequence, allowing visitors to view any photograph in high definition and browse the entire set.
+* **Full Swipe-Through Navigation:**
+  - **Touch Gestures:** Native touch swiping for smartphones and tablets (swipe left for next, swipe right for previous).
+  - **Mouse Drag (Desktop/Trackpads):** Click-and-drag navigation allowing desktop users to drag images left or right.
+  - **On-Screen Arrow Controls:** High-visibility Previous (`<`) and Next (`>`) buttons with golden accents and hover animations.
+  - **Keyboard Navigation:** Left Arrow key (previous), Right Arrow key (next).
+* **Closing & Dismissal:**
+  - Dedicated Close button (`&times;`) in the top-right corner with clear focus ring and hover animation.
+  - Keyboard `Escape` key closes the modal and returns focus to the triggering element.
+  - Clicking on the modal backdrop or outside the dialog automatically dismisses the modal.
+  - Prevents background page scrolling while modal is active.

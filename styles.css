@@ -863,12 +863,116 @@ a {
   background: #143328;
 }
 
-.tribute-main-portrait-img {
+.tribute-main-portrait-wrap.gallery-item {
+  cursor: pointer;
+  outline: none;
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s ease, border-color 0.28s ease;
+}
+
+.tribute-main-portrait-wrap.gallery-item:hover {
+  transform: translateY(-4px);
+  border-color: var(--gold-light);
+  box-shadow: 0 20px 44px rgba(16, 39, 31, 0.28), 0 0 20px rgba(201, 155, 75, 0.35);
+}
+
+.tribute-main-portrait-wrap.gallery-item:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 3px;
+}
+
+.tribute-main-portrait-wrap .tribute-main-portrait-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center top;
   display: block;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.tribute-main-portrait-wrap.gallery-item:hover .tribute-main-portrait-img {
+  transform: scale(1.03);
+}
+
+.portrait-zoom-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(5, 14, 11, 0.72) 0%, rgba(5, 14, 11, 0.08) 50%, transparent 100%);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 16px;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+
+.tribute-main-portrait-wrap.gallery-item:hover .portrait-zoom-overlay,
+.tribute-main-portrait-wrap.gallery-item:focus-visible .portrait-zoom-overlay {
+  opacity: 1;
+}
+
+.portrait-zoom-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(16, 39, 31, 0.92);
+  color: #ffffff;
+  border: 1px solid var(--gold);
+  border-radius: 20px;
+  padding: 7px 15px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.portrait-zoom-pill svg {
+  color: var(--gold-light);
+}
+
+/* Homepage Celebrant Card Portrait Expand Button */
+.celebrant-photo-trigger {
+  position: relative;
+  cursor: pointer;
+}
+
+.portrait-expand-btn {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  background: rgba(16, 39, 31, 0.88);
+  border: 1px solid var(--gold);
+  color: #ffffff;
+  border-radius: 20px;
+  padding: 6px 12px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.22s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.celebrant-feature-card:hover .portrait-expand-btn,
+.portrait-expand-btn:focus-visible {
+  background: var(--gold);
+  color: var(--forest);
+  border-color: #ffffff;
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(201, 155, 75, 0.45);
+}
+
+.portrait-expand-btn:focus-visible {
+  outline: 2px solid var(--gold-light);
+  outline-offset: 2px;
 }
 
 .tribute-quick-facts {
@@ -1418,25 +1522,25 @@ a {
 @media (max-width: 900px) {
   .lightbox-prev-btn {
     left: 8px;
-    top: auto;
-    bottom: -10px;
-    transform: none;
-    width: 42px;
-    height: 42px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    z-index: 25;
   }
   .lightbox-next-btn {
     right: 8px;
-    top: auto;
-    bottom: -10px;
-    transform: none;
-    width: 42px;
-    height: 42px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    z-index: 25;
   }
   .lightbox-nav-btn:hover {
-    transform: scale(1.08);
+    transform: translateY(-50%) scale(1.08);
   }
   .lightbox-meta {
-    padding-bottom: 36px;
+    padding-bottom: 24px;
   }
 }
 
@@ -2876,6 +2980,19 @@ main.is-page-transitioning {
   color: #b0c3b7;
 }
 
+[data-theme="dark"] .portrait-zoom-pill {
+  background: rgba(13, 35, 27, 0.95);
+  border-color: var(--gold-light);
+  color: #ffffff;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6);
+}
+
+[data-theme="dark"] .portrait-expand-btn {
+  background: rgba(13, 35, 27, 0.92);
+  border-color: var(--gold);
+  color: #ffffff;
+}
+
 [data-theme="dark"] .sunexus-promo-section {
   background: var(--sunexus-bg);
   border-top-color: var(--line);
@@ -2884,6 +3001,7 @@ main.is-page-transitioning {
 [data-theme="dark"] .sunexus-card {
   box-shadow: 0 16px 48px rgba(0, 0, 0, 0.55), 0 0 32px rgba(201, 155, 75, 0.2);
 }
+
 
 
 

@@ -216,7 +216,7 @@
       const current = this.audio.currentTime || 0;
       const duration = this.audio.duration && !isNaN(this.audio.duration) && this.audio.duration > 0
         ? this.audio.duration
-        : 109.36; // 1:49 default known track duration
+        : 181.54; // 3:01 default known track duration
 
       if (el.timeCurrent) {
         el.timeCurrent.textContent = this.formatTime(current);
@@ -459,14 +459,16 @@
 
     if (!lightboxModal || !lightboxImg || !lightboxCloseBtn) return;
 
-    let galleryItems = Array.from(document.querySelectorAll('.gallery-item'));
+    const getGalleryItems = () => Array.from(document.querySelectorAll('.gallery-item, .celebrant-photo-trigger'));
+
+    let galleryItems = getGalleryItems();
     if (!galleryItems.length) return;
 
     let currentIndex = 0;
     let lastActiveElement = null;
 
     const showIndex = (index) => {
-      galleryItems = Array.from(document.querySelectorAll('.gallery-item'));
+      galleryItems = getGalleryItems();
       if (!galleryItems.length) return;
 
       if (index < 0) {
@@ -481,15 +483,17 @@
       const img = item.querySelector('img');
       if (!img) return;
 
-      const title = item.getAttribute('data-title') || item.querySelector('.gallery-card-title')?.textContent || '';
+      const title = item.getAttribute('data-title') || item.querySelector('.gallery-card-title')?.textContent || img.alt || '';
       const caption = item.getAttribute('data-caption') || item.querySelector('.gallery-card-desc')?.textContent || img.alt || '';
 
-      lightboxImg.style.opacity = '0.4';
+      lightboxImg.style.opacity = '0.3';
+      lightboxImg.style.transform = 'scale(0.97)';
       lightboxImg.src = img.src;
       lightboxImg.alt = img.alt || title || caption || 'Celebration photograph';
 
       lightboxImg.onload = () => {
         lightboxImg.style.opacity = '1';
+        lightboxImg.style.transform = 'scale(1)';
       };
 
       if (lightboxTitle) {
@@ -535,13 +539,15 @@
       }
     };
 
+    // Bind triggers for all gallery items and profile photo triggers
     galleryItems.forEach((item, idx) => {
       if (item.dataset.lightboxBound) return;
       item.dataset.lightboxBound = 'true';
 
       const handleTrigger = (e) => {
         e.preventDefault();
-        galleryItems = Array.from(document.querySelectorAll('.gallery-item'));
+        e.stopPropagation();
+        galleryItems = getGalleryItems();
         const realIdx = galleryItems.indexOf(item);
         openLightbox(realIdx !== -1 ? realIdx : idx, item);
       };
@@ -554,6 +560,21 @@
       });
     });
 
+    // Specifically bind expand buttons inside celebrant cards
+    document.querySelectorAll('.portrait-expand-btn').forEach((btn) => {
+      if (btn.dataset.lightboxBound) return;
+      btn.dataset.lightboxBound = 'true';
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const parentTrigger = btn.closest('.celebrant-photo-trigger') || btn.closest('.gallery-item');
+        galleryItems = getGalleryItems();
+        const idx = parentTrigger ? galleryItems.indexOf(parentTrigger) : 0;
+        openLightbox(idx !== -1 ? idx : 0, btn);
+      });
+    });
+
+    // Bind Close Button
     if (lightboxCloseBtn && !lightboxCloseBtn.dataset.lightboxBound) {
       lightboxCloseBtn.dataset.lightboxBound = 'true';
       lightboxCloseBtn.addEventListener('click', (e) => {
@@ -562,6 +583,7 @@
       });
     }
 
+    // Bind Previous Button
     if (lightboxPrevBtn && !lightboxPrevBtn.dataset.lightboxBound) {
       lightboxPrevBtn.dataset.lightboxBound = 'true';
       lightboxPrevBtn.addEventListener('click', (e) => {
@@ -571,6 +593,7 @@
       });
     }
 
+    // Bind Next Button
     if (lightboxNextBtn && !lightboxNextBtn.dataset.lightboxBound) {
       lightboxNextBtn.dataset.lightboxBound = 'true';
       lightboxNextBtn.addEventListener('click', (e) => {
@@ -580,11 +603,12 @@
       });
     }
 
+    // Backdrop click and Global Keyboard & Touch/Mouse Gestures
     if (!lightboxModal.dataset.lightboxModalBound) {
       lightboxModal.dataset.lightboxModalBound = 'true';
 
       lightboxModal.addEventListener('click', (e) => {
-        if (e.target === lightboxModal) {
+        if (e.target === lightboxModal || e.target.classList.contains('lightbox-dialog') || e.target.classList.contains('lightbox-image-wrap')) {
           closeLightbox();
         }
       });
@@ -607,22 +631,38 @@
       // Mobile touch swipe gestures
       let touchStartX = 0;
       let touchStartY = 0;
+      let isTouching = false;
 
       lightboxModal.addEventListener('touchstart', (e) => {
         if (e.touches && e.touches.length > 0) {
           touchStartX = e.touches[0].clientX;
           touchStartY = e.touches[0].clientY;
+          isTouching = true;
         }
       }, { passive: true });
 
+      lightboxModal.addEventListener('touchmove', (e) => {
+        if (!isTouching || !e.touches || e.touches.length === 0) return;
+        const currentX = e.touches[0].clientX;
+        const currentY = e.touches[0].clientY;
+        const diffX = currentX - touchStartX;
+        const diffY = currentY - touchStartY;
+
+        // If predominantly horizontal swipe, prevent page vertical scroll jitter
+        if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 10) {
+          if (e.cancelable) e.preventDefault();
+        }
+      }, { passive: false });
+
       lightboxModal.addEventListener('touchend', (e) => {
-        if (!e.changedTouches || e.changedTouches.length === 0) return;
+        if (!isTouching || !e.changedTouches || e.changedTouches.length === 0) return;
+        isTouching = false;
         const touchEndX = e.changedTouches[0].clientX;
         const touchEndY = e.changedTouches[0].clientY;
         const diffX = touchEndX - touchStartX;
         const diffY = touchEndY - touchStartY;
 
-        if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 40) {
+        if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 35) {
           if (diffX < 0) {
             showIndex(currentIndex + 1); // Swipe left -> Next
           } else {
@@ -630,6 +670,30 @@
           }
         }
       }, { passive: true });
+
+      // Mouse drag swipe gestures (Desktop & Trackpads)
+      let mouseStartX = 0;
+      let isMouseDown = false;
+
+      lightboxModal.addEventListener('mousedown', (e) => {
+        if (e.target.closest('button')) return;
+        isMouseDown = true;
+        mouseStartX = e.clientX;
+      });
+
+      window.addEventListener('mouseup', (e) => {
+        if (!isMouseDown) return;
+        isMouseDown = false;
+        if (!lightboxModal.classList.contains('is-open')) return;
+        const diffX = e.clientX - mouseStartX;
+        if (Math.abs(diffX) > 45) {
+          if (diffX < 0) {
+            showIndex(currentIndex + 1); // Drag left -> Next
+          } else {
+            showIndex(currentIndex - 1); // Drag right -> Prev
+          }
+        }
+      });
     }
   };
 
