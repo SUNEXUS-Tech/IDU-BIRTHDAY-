@@ -17,7 +17,7 @@
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="1200">
   <meta property="og:image:type" content="image/jpeg">
-  <meta property="og:image:alt" content="Official link preview for Ibadan Descendants Union Dallas–Fort Worth Chapter November birthday celebration honouring Chief David Akinwale, Chief Mrs Janet Akintayo, and Chief John Adedeji.">
+  <meta property="og:image:alt" content="Official link preview for Ibadan Descendants Union Dallas–Fort Worth Chapter November birthday celebration honouring Chief David Akinwale, Chief (Mrs.) Janet Apesinola, and Chief John Adeniji.">
   <meta property="og:site_name" content="IDU Dallas–Fort Worth Chapter">
 
   <!-- Twitter / X Cards -->
@@ -25,7 +25,7 @@
   <meta name="twitter:title" content="A November Tribute | IDU Dallas–Fort Worth">
   <meta name="twitter:description" content="A November birthday tribute celebrating the distinguished members of Ibadan Descendants Union, Dallas–Fort Worth Chapter.">
   <meta name="twitter:image" content="https://idudfwceleb.ai.studio/idu-preview.jpg">
-  <meta name="twitter:image:alt" content="Official link preview for Ibadan Descendants Union Dallas–Fort Worth Chapter November birthday celebration honouring Chief David Akinwale, Chief Mrs Janet Akintayo, and Chief John Adedeji.">
+  <meta name="twitter:image:alt" content="Official link preview for Ibadan Descendants Union Dallas–Fort Worth Chapter November birthday celebration honouring Chief David Akinwale, Chief (Mrs.) Janet Apesinola, and Chief John Adeniji.">
 
   <!-- Schema.org Structured Data -->
   <script type="application/ld+json">
@@ -43,6 +43,16 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <!-- Immediate Theme Initializer to Prevent Flash of Unstyled Theme (FOUT) -->
+  <script>
+    (function() {
+      try {
+        var t = localStorage.getItem('idu-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', t);
+        if (t === 'dark') document.documentElement.classList.add('dark');
+      } catch (_) {}
+    })();
+  </script>
 </head>
 <body>
   <header class="site-header-bar">
@@ -53,6 +63,23 @@
         <span><strong>IDU-DFW</strong><small>Dallas–Fort Worth Chapter</small></span>
       </a>
       <div class="header-actions">
+        <!-- Circular Theme Toggle Button -->
+        <button type="button" class="theme-toggle-btn" id="theme-toggle-btn" aria-label="Toggle dark theme" title="Toggle dark or light theme">
+          <svg class="sun-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg class="moon-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
         <!-- Circular Navbar Play/Pause Music Control -->
         <button type="button" class="nav-music-btn" id="nav-music-btn" aria-label="Play or pause tribute soundtrack" title="Play or pause tribute soundtrack">
           <svg class="nav-play-svg" id="nav-play-svg" viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true">
@@ -71,40 +98,40 @@
     <!-- Celebrants Navigation Section -->
     <section class="celebrants-nav-section wrap" aria-label="Celebrate Our November Celebrants">
       <div class="nav-section-header">
-        <h1 class="nav-section-title">Celebrate Our November Celebrants</h1>
-        <p class="nav-section-desc">Honouring distinguished members of our Ibadan Descendants Union family.</p>
+        <h1 class="nav-section-title">Ibadan Descendants Union, Dallas</h1>
+        <p class="nav-section-desc">Celebrating our heritage, honouring our people, and keeping the spirit of Ibadan alive across generations and borders. Together, we celebrate the lives, legacies, and special moments that unite us.</p>
       </div>
 
       <div class="celebrants-nav-cards" role="region" aria-label="Celebrant Profile Cards">
         <!-- CARD 1: Chief David Akinwale -->
-        <a class="nav-card" href="#celebrant-akinwale" aria-label="Chief David, November 09 — View personal tribute">
+        <a class="nav-card" href="#celebrant-card-akinwale" aria-label="Chief David Akinwale, November 09 — View celebrant details">
           <div class="nav-card-media">
             <img src="assets/chief-david-akinwale.jpg" alt="Portrait of Chief David Akinwale" class="nav-card-img" onerror="this.style.display='none';this.parentElement.classList.add('portrait-placeholder')">
           </div>
           <div class="nav-card-footer">
-            <h2 class="nav-card-name">Chief David</h2>
+            <h2 class="nav-card-name">Chief David Akinwale</h2>
             <span class="nav-card-date">November 09</span>
           </div>
         </a>
 
-        <!-- CARD 2: Chief Mrs Janet Akintayo -->
-        <a class="nav-card" href="#celebrant-akintayo" aria-label="Chief Janet, November 22 — View personal tribute">
+        <!-- CARD 2: Chief (Mrs.) Janet Apesinola -->
+        <a class="nav-card" href="#celebrant-card-apesinola" aria-label="Chief (Mrs.) Janet Apesinola, November 22 — View celebrant details">
           <div class="nav-card-media">
-            <img src="assets/chief-janet-akintayo.jpg" alt="Portrait of Chief Mrs Janet Akintayo" class="nav-card-img" onerror="this.style.display='none';this.parentElement.classList.add('portrait-placeholder')">
+            <img src="assets/chief-janet-akintayo.jpg" alt="Portrait of Chief (Mrs.) Janet Apesinola" class="nav-card-img" onerror="this.style.display='none';this.parentElement.classList.add('portrait-placeholder')">
           </div>
           <div class="nav-card-footer">
-            <h2 class="nav-card-name">Chief Janet</h2>
+            <h2 class="nav-card-name">Chief (Mrs.) Janet Apesinola</h2>
             <span class="nav-card-date">November 22</span>
           </div>
         </a>
 
-        <!-- CARD 3: Chief John Adedeji -->
-        <a class="nav-card" href="#celebrant-adedeji" aria-label="Chief John, November 29 — View personal tribute">
+        <!-- CARD 3: Chief John Adeniji -->
+        <a class="nav-card" href="#celebrant-card-adeniji" aria-label="Chief John Adeniji, November 29 — View celebrant details">
           <div class="nav-card-media">
-            <img src="assets/chief-john-adedeji.jpg" alt="Portrait of Chief John Adedeji" class="nav-card-img" onerror="this.style.display='none';this.parentElement.classList.add('portrait-placeholder')">
+            <img src="assets/chief-john-adedeji.jpg" alt="Portrait of Chief John Adeniji" class="nav-card-img" onerror="this.style.display='none';this.parentElement.classList.add('portrait-placeholder')">
           </div>
           <div class="nav-card-footer">
-            <h2 class="nav-card-name">Chief John</h2>
+            <h2 class="nav-card-name">Chief John Adeniji</h2>
             <span class="nav-card-date">November 29</span>
           </div>
         </a>
@@ -123,19 +150,6 @@
           </span>
           <span class="celebrate-btn-text" id="celebrate-btn-text">Celebrate With Us</span>
         </button>
-
-        <!-- Homepage Play/Pause Button -->
-        <button type="button" class="home-play-btn" id="home-play-btn" aria-label="Play tribute song" title="Play or pause tribute song">
-          <span class="home-icon-wrap" aria-hidden="true">
-            <svg class="home-play-svg" id="home-play-svg" viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
-              <path d="M8 5v14l11-7z"/>
-            </svg>
-            <svg class="home-pause-svg" id="home-pause-svg" viewBox="0 0 24 24" width="14" height="14" fill="currentColor" style="display: none;">
-              <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
-            </svg>
-          </span>
-          <span class="home-play-text" id="home-play-text">Play Tribute Song</span>
-        </button>
       </div>
     </section>
 
@@ -146,86 +160,97 @@
       </div>
     </section>
 
-    <!-- Individual Celebrant Tributes Section -->
+    <!-- Celebrants Section with Three Individual Celebrant Cards -->
     <section id="celebrants" class="celebrants wrap">
       <div class="section-heading">
-        <div><h2>Three lives. <em>One community.</em></h2></div>
-        <p class="section-aside">Celebrating the people who help keep our shared heritage and community spirit alive.</p>
+        <div><h2>Our November <em>Celebrants</em></h2></div>
+        <p class="section-aside">Honouring distinguished leadership, service, and heritage across our community.</p>
       </div>
 
-      <!-- Chief David Akinwale Profile -->
-      <article id="celebrant-akinwale" class="celebrant-card">
-        <div class="portrait portrait-one">
-          <img src="assets/chief-david-akinwale.jpg" alt="Portrait of Chief David Akinwale" onerror="this.style.display='none';this.parentElement.classList.add('portrait-placeholder')">
-          <span class="portrait-fallback">DA</span>
-          <span class="portrait-label">NOVEMBER 09</span>
-        </div>
-        <div class="celebrant-copy">
-          <h3>Chief David Akinwale</h3>
-          <p class="honour-title">Otun Baale of Akobo Ojurin</p>
-          <p class="role">CEO, Providence Arena Group of Companies</p>
-          <div class="gold-rule"></div>
-          <p>Today, we celebrate your journey, leadership and contribution. May the year ahead bring renewed strength, sound health, abundant joy and continued success in all that matters to you.</p>
-          <p class="yoruba-blessing">Ẹ kú ọjọ́ ìbí. Ọ̀pọ̀ ọdún àti àlàáfíà ni a ń kí yín.</p>
-        </div>
-      </article>
+      <div class="celebrants-section-grid" role="region" aria-label="Individual Celebrant Feature Cards">
+        <!-- CELEBRANT CARD 1: Chief David Akinwale -->
+        <a id="celebrant-card-akinwale" href="tribute-david-akinwale.html" class="celebrant-feature-card" aria-label="Chief David Akinwale — View Full Tribute and Gallery">
+          <div class="feature-card-media">
+            <img src="assets/chief-david-akinwale.jpg" alt="Portrait of Chief David Akinwale" class="feature-card-img" onerror="this.style.display='none';this.parentElement.classList.add('portrait-placeholder')">
+            <span class="feature-date-badge">November 09</span>
+          </div>
+          <div class="feature-card-content">
+            <div class="feature-header-wrap">
+              <h3 class="feature-card-name">Chief David Akinwale</h3>
+              <p class="feature-card-title">Otun Baale of Akobo Ojurin</p>
+              <p class="feature-card-role">CEO, Providence Arena Group of Companies</p>
+            </div>
+            <div class="card-gold-divider"></div>
+            <p class="feature-card-blurb">Distinguished community leader, philanthropist, and visionary business executive celebrating a milestone of dedicated service and leadership.</p>
+            <div class="feature-card-action">
+              <span class="celebrant-card-cta" aria-hidden="true">
+                <span>View Full Tribute &amp; Gallery</span>
+                <span class="cta-arrow">&rarr;</span>
+              </span>
+            </div>
+          </div>
+        </a>
 
-      <!-- Chief Mrs Janet Akintayo Profile -->
-      <article id="celebrant-akintayo" class="celebrant-card reverse">
-        <div class="portrait portrait-two">
-          <img src="assets/chief-janet-akintayo.jpg" alt="Portrait of Chief Mrs Janet Akintayo" onerror="this.style.display='none';this.parentElement.classList.add('portrait-placeholder')">
-          <span class="portrait-fallback">JA</span>
-          <span class="portrait-label">NOVEMBER 22</span>
-        </div>
-        <div class="celebrant-copy">
-          <h3>Chief Mrs Janet Akintayo</h3>
-          <p class="honour-title">Yeye Apesinola of Ibadan Land</p>
-          <div class="gold-rule"></div>
-          <p>We honour you with warmth and appreciation, celebrating the grace and distinction you bring to our community. May your new year be filled with peace, laughter, fulfilled hopes and the loving presence of family and friends.</p>
-          <p class="yoruba-blessing">Ẹ kú ọjọ́ ìbí. Àlàáfíà, ayọ̀ àti ìbùkún ni a ń fẹ́ fún yín.</p>
-        </div>
-      </article>
+        <!-- CELEBRANT CARD 2: Chief (Mrs.) Janet Apesinola -->
+        <a id="celebrant-card-apesinola" href="tribute-janet-apesinola.html" class="celebrant-feature-card" aria-label="Chief (Mrs.) Janet Apesinola — View Full Tribute and Gallery">
+          <div class="feature-card-media">
+            <img src="assets/chief-janet-akintayo.jpg" alt="Portrait of Chief (Mrs.) Janet Apesinola" class="feature-card-img" onerror="this.style.display='none';this.parentElement.classList.add('portrait-placeholder')">
+            <span class="feature-date-badge">November 22</span>
+          </div>
+          <div class="feature-card-content">
+            <div class="feature-header-wrap">
+              <h3 class="feature-card-name">Chief (Mrs.) Janet Apesinola</h3>
+              <p class="feature-card-title">Yeye Apesinola of Ibadan Land</p>
+              <p class="feature-card-role">Esteemed Matron &amp; Community Pillar</p>
+            </div>
+            <div class="card-gold-divider"></div>
+            <p class="feature-card-blurb">Revered matriarch of customary distinction and warmth, celebrated for her lasting grace, cultural heritage, and inspirational community presence.</p>
+            <div class="feature-card-action">
+              <span class="celebrant-card-cta" aria-hidden="true">
+                <span>View Full Tribute &amp; Gallery</span>
+                <span class="cta-arrow">&rarr;</span>
+              </span>
+            </div>
+          </div>
+        </a>
 
-      <!-- Chief John Adedeji Profile -->
-      <article id="celebrant-adedeji" class="celebrant-card">
-        <div class="portrait portrait-three">
-          <img src="assets/chief-john-adedeji.jpg" alt="Portrait of Chief John Adedeji" onerror="this.style.display='none';this.parentElement.classList.add('portrait-placeholder')">
-          <span class="portrait-fallback">JA</span>
-          <span class="portrait-label">NOVEMBER 29</span>
-        </div>
-        <div class="celebrant-copy">
-          <h3>Chief John Adedeji</h3>
-          <p class="honour-title">Financial Secretary, IDU Dallas Chapter</p>
-          <p class="role">Chief Accountant</p>
-          <div class="gold-rule"></div>
-          <p>We celebrate you and the expertise and service you bring to your professional and community life. May the coming year open new doors, deepen your joy and grant you good health, fulfilment and lasting peace.</p>
-          <p class="yoruba-blessing">Ẹ kú ọjọ́ ìbí. Ọlọ́run kó ọdún púpọ̀ àti ìlera fún yín.</p>
-        </div>
-      </article>
+        <!-- CELEBRANT CARD 3: Chief John Adeniji -->
+        <a id="celebrant-card-adeniji" href="tribute-john-adeniji.html" class="celebrant-feature-card" aria-label="Chief John Adeniji — View Full Tribute and Gallery">
+          <div class="feature-card-media">
+            <img src="assets/chief-john-adedeji.jpg" alt="Portrait of Chief John Adeniji" class="feature-card-img" onerror="this.style.display='none';this.parentElement.classList.add('portrait-placeholder')">
+            <span class="feature-date-badge">November 29</span>
+          </div>
+          <div class="feature-card-content">
+            <div class="feature-header-wrap">
+              <h3 class="feature-card-name">Chief John Adeniji</h3>
+              <p class="feature-card-title">Financial Secretary, IDU Dallas Chapter</p>
+              <p class="feature-card-role">Chief Accountant</p>
+            </div>
+            <div class="card-gold-divider"></div>
+            <p class="feature-card-blurb">Respected financial steward and union officer, commended for professional excellence, integrity, and unreserved commitment to our shared union.</p>
+            <div class="feature-card-action">
+              <span class="celebrant-card-cta" aria-hidden="true">
+                <span>View Full Tribute &amp; Gallery</span>
+                <span class="cta-arrow">&rarr;</span>
+              </span>
+            </div>
+          </div>
+        </a>
+      </div>
     </section>
 
-    <!-- Musical Tribute Section -->
-    <section class="audio-section" id="tribute-audio-section">
-      <div class="wrap audio-inner">
-        <div class="audio-mark" aria-hidden="true">♫</div>
-        <div class="audio-copy">
-          <h2>For the joy of this moment.</h2>
-          <p>An original tribute featuring spoken celebration, Yoruba praise and a musical bed created for this occasion.</p>
-          <p class="audio-status" id="audio-status">Official Mastered Tribute Soundtrack · Playing across Dallas–Fort Worth</p>
-        </div>
-        <div class="audio-player in-section-player">
-          <div class="section-player-header">
+    <!-- Musical Tribute Section (Simplified) -->
+    <section class="audio-section" id="tribute-audio-section" aria-label="IDU November Celebration Song Player">
+      <div class="wrap audio-inner simplified-audio-inner">
+        <div class="audio-player in-section-player simplified-player">
+          <div class="section-player-header simplified-header">
             <div class="track-equalizer" aria-hidden="true" id="section-equalizer">
               <span class="bar bar-1"></span>
               <span class="bar bar-2"></span>
               <span class="bar bar-3"></span>
               <span class="bar bar-4"></span>
             </div>
-            <div class="track-meta">
-              <div class="track-header-badge">OFFICIAL TRIBUTE SOUNDTRACK</div>
-              <h3 class="track-main-title">IDU DFW November Celebrants Tribute</h3>
-              <p class="track-subtitle">Yoruba Praise, Spoken Word &amp; Celebration Melody</p>
-            </div>
+            <h2 class="track-main-title simplified-title">IDU November Celebration Song</h2>
           </div>
 
           <!-- Controls row: Play button, Progress Bar & Scrubber, Current & Total Time, Volume -->
@@ -237,7 +262,7 @@
               <svg class="pause-svg" id="section-pause-icon" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true" style="display: none;">
                 <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
               </svg>
-              <span class="btn-text">Play Tribute Music</span>
+              <span class="btn-text">Play</span>
             </button>
 
             <div class="progress-wrapper">
@@ -276,12 +301,126 @@
         <img src="assets/idu-logo.jpg" alt="IDU Dallas–Fort Worth Chapter logo" class="closing-logo" onerror="this.style.display='none'">
       </div>
     </section>
+
+    <!-- SUNEXUS Promotional Section -->
+    <section class="sunexus-promo-section" aria-label="SUNEXUS Bespoke Celebrations and Digital Experiences">
+      <div class="wrap sunexus-promo-inner">
+        <div class="sunexus-card">
+          <div class="sunexus-card-glow" aria-hidden="true"></div>
+          <div class="sunexus-badge-tag">
+            <span class="sunexus-brand-pill">SUNEXUS</span>
+            <span class="sunexus-tag-sep">·</span>
+            <span class="sunexus-tag-text">Digital Experiences &amp; Bespoke Tributes</span>
+          </div>
+
+          <h2 class="sunexus-headline">Your Moments Deserve More Than Memories.</h2>
+
+          <div class="sunexus-copy-wrap">
+            <p class="sunexus-lead">Celebrate people. Preserve legacies. Tell your stories beautifully.</p>
+            <p class="sunexus-subtext">SUNEXUS creates personalised digital experiences that bring birthdays, anniversaries, family celebrations, tributes and special occasions to life.</p>
+          </div>
+
+          <!-- Services Grid -->
+          <div class="sunexus-services-grid" role="list">
+            <div class="sunexus-service-item" role="listitem">
+              <span class="sunexus-service-dot" aria-hidden="true">✦</span>
+              <span class="sunexus-service-label">Bespoke tribute and celebration websites</span>
+            </div>
+            <div class="sunexus-service-item" role="listitem">
+              <span class="sunexus-service-dot" aria-hidden="true">✦</span>
+              <span class="sunexus-service-label">Creative branding and visual design</span>
+            </div>
+            <div class="sunexus-service-item" role="listitem">
+              <span class="sunexus-service-dot" aria-hidden="true">✦</span>
+              <span class="sunexus-service-label">Custom tribute music and audio production</span>
+            </div>
+            <div class="sunexus-service-item" role="listitem">
+              <span class="sunexus-service-dot" aria-hidden="true">✦</span>
+              <span class="sunexus-service-label">Digital storytelling and photography galleries</span>
+            </div>
+            <div class="sunexus-service-item" role="listitem">
+              <span class="sunexus-service-dot" aria-hidden="true">✦</span>
+              <span class="sunexus-service-label">Website development and digital solutions</span>
+            </div>
+          </div>
+
+          <!-- Brand Statement & Closing Message -->
+          <div class="sunexus-footer-banner">
+            <div class="sunexus-brand-statement">SUNEXUS — Build. Innovate. Grow. Secure.</div>
+            <div class="sunexus-closing-message">
+              <p class="sunexus-invitation">"Let's create something worth remembering."</p>
+              <p class="sunexus-creator-tag">A creative technology brand by <strong>Uthman Adesola</strong>.</p>
+            </div>
+            <div class="sunexus-cta-wrap">
+              <a href="https://wa.me/2349036066187?text=Hello%20SUNEXUS%2C%20I%20would%20like%20to%20create%20a%20celebration%20experience" target="_blank" rel="noopener noreferrer" class="sunexus-cta-btn" aria-label="Create Your Own Celebration with SUNEXUS via WhatsApp">
+                <span>Create Your Own Celebration</span>
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+                  <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="wrap footer-inner">
-      <span>IBADAN DESCENDANTS UNION · DALLAS–FORT WORTH CHAPTER</span>
-      <span>Made with respect for our people and heritage.</span>
+  <!-- Professional Footer -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="wrap footer-content-grid">
+      <!-- Union / Chapter Details -->
+      <div class="footer-col footer-col-union">
+        <div class="footer-identity">
+          <img src="assets/idu-logo.jpg" alt="IDU Dallas–Fort Worth Chapter logo" class="footer-logo" onerror="this.style.display='none'">
+          <div>
+            <strong class="footer-title">Ibadan Descendants Union</strong>
+            <span class="footer-subtitle">Dallas–Fort Worth Chapter, Texas</span>
+          </div>
+        </div>
+        <p class="footer-mission">
+          Dedicated to celebrating our people, honouring our heritage, and strengthening the bonds of community across generations and borders.
+        </p>
+      </div>
+
+      <!-- Credits: Design & Music by Uthman Adesola -->
+      <div class="footer-col footer-col-credits">
+        <h3 class="footer-heading">Production &amp; Creative Credits</h3>
+        <div class="footer-credit-block">
+          <span class="credit-role-label">Website Designed By</span>
+          <strong class="credit-name">Uthman Adesola</strong>
+          <span class="credit-details">Creative Director, SUNEXUS | Brand Identity Designer | Digital Solutions Innovator.</span>
+        </div>
+        <div class="footer-credit-block">
+          <span class="credit-role-label">Music Created By</span>
+          <strong class="credit-name">Uthman Adesola</strong>
+          <span class="credit-details">Music Production | Creative Direction | Digital Media.</span>
+        </div>
+      </div>
+
+      <!-- Direct Contact & WhatsApp Consultation -->
+      <div class="footer-col footer-col-contact">
+        <h3 class="footer-heading">Direct Inquiries &amp; WhatsApp</h3>
+        <p class="footer-contact-desc">
+          Connect directly with the creative director for celebration websites, tribute productions, or digital consultations:
+        </p>
+        <a href="https://wa.me/2349036066187" target="_blank" rel="noopener noreferrer" class="whatsapp-btn" aria-label="Chat directly on WhatsApp with Uthman Adesola (+234 903 606 6187)">
+          <svg class="whatsapp-icon" viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true">
+            <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2zm.01 1.67c2.2 0 4.26.86 5.82 2.42a8.21 8.21 0 0 1 2.41 5.82c0 4.54-3.7 8.24-8.24 8.24-1.41 0-2.8-.36-4.02-1.05l-.29-.16-3.12.82.83-3.04-.19-.31a8.2 8.2 0 0 1-1.25-4.46c0-4.54 3.7-8.24 8.24-8.24zm4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.65.81-.8 1-.15.19-.3.21-.55.08-.25-.13-1.06-.39-2.02-1.25-.75-.67-1.26-1.5-1.4-1.75-.15-.25-.02-.39.11-.51.11-.11.25-.29.38-.44.13-.15.17-.25.25-.42.08-.17.04-.32-.02-.45-.06-.13-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.13.17 1.78 2.72 4.31 3.81.6.26 1.07.41 1.44.53.61.19 1.16.17 1.6.1.49-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.11-.23-.17-.48-.3z"/>
+          </svg>
+          <div class="whatsapp-btn-text">
+            <span class="whatsapp-btn-label">Chat on WhatsApp</span>
+            <span class="whatsapp-btn-num">+234 903 606 6187</span>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- Bottom copyright bar -->
+    <div class="footer-bottom-bar">
+      <div class="wrap footer-bottom-inner">
+        <span class="footer-copy">&copy; <span class="current-year">2026</span> Ibadan Descendants Union, Dallas. All rights reserved.</span>
+        <span class="footer-brand-discreet">A bespoke digital experience powered by <strong class="gold-text">SUNEXUS</strong></span>
+      </div>
     </div>
   </footer>
 

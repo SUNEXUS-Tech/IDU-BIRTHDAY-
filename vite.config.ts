@@ -18,5 +18,15 @@ export default defineConfig(() => {
       // Disable file watching when DISABLE_HMR is true to save CPU during agent edits.
       watch: process.env.DISABLE_HMR === 'true' ? null : {},
     },
+    build: {
+      rollupOptions: {
+        input: {
+          main: path.resolve(__dirname, 'index.html'),
+          david: path.resolve(__dirname, 'tribute-david-akinwale.html'),
+          janet: path.resolve(__dirname, 'tribute-janet-apesinola.html'),
+          john: path.resolve(__dirname, 'tribute-john-adeniji.html'),
+        },
+      },
+    },
   };
 });

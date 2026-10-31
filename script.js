@@ -1,3 +1,7 @@
+/**
+ * IDU Dallas–Fort Worth November Birthday Tribute
+ * Unified Client Application Engine & Persistent Audio Architecture
+ */
 (() => {
   // ==========================================================================
   // 1. Sticky Navigation Bar Elevation
@@ -16,192 +20,29 @@
   }
 
   // ==========================================================================
-  // 2. Celebrant Interactive Tribute Panels & Circular Avatar Navigation
+  // 2. Dynamic Copyright Year Initializer
   // ==========================================================================
-  const celebrantNavItems = Array.from(document.querySelectorAll('.celebrant-nav-item'));
-  const tributePanels = Array.from(document.querySelectorAll('.tribute-panel'));
-  const heroCards = Array.from(document.querySelectorAll('.hero-card'));
-  const viewTributeBtns = Array.from(document.querySelectorAll('.view-tribute-btn'));
-
-  const activateCelebrant = (targetId, shouldScroll = false) => {
-    if (!targetId) return;
-
-    // 1. Update circular navigation tabs
-    celebrantNavItems.forEach((tab) => {
-      const isMatch = tab.dataset.target === targetId;
-      tab.classList.toggle('is-active', isMatch);
-      tab.setAttribute('aria-selected', isMatch ? 'true' : 'false');
-      tab.setAttribute('tabindex', isMatch ? '0' : '-1');
+  const initDynamicYear = () => {
+    const currentYear = new Date().getFullYear();
+    document.querySelectorAll('.current-year').forEach((el) => {
+      el.textContent = currentYear;
     });
-
-    // 2. Update hero card buttons
-    viewTributeBtns.forEach((btn) => {
-      const isMatch = btn.dataset.target === targetId;
-      btn.setAttribute('aria-expanded', isMatch ? 'true' : 'false');
-    });
-
-    // 3. Update tribute panels
-    let targetPanel = null;
-    tributePanels.forEach((panel) => {
-      const isMatch = panel.id === targetId;
-      if (isMatch) {
-        targetPanel = panel;
-        panel.removeAttribute('hidden');
-        panel.classList.add('is-active');
-        panel.setAttribute('aria-hidden', 'false');
-      } else {
-        panel.setAttribute('hidden', '');
-        panel.classList.remove('is-active');
-        panel.setAttribute('aria-hidden', 'true');
-      }
-    });
-
-    // 4. Smooth scroll to tribute section with sticky header offset if triggered by user
-    if (shouldScroll && targetPanel) {
-      const celebrantsSection = document.getElementById('celebrants');
-      if (celebrantsSection) {
-        const headerHeight = headerBar ? headerBar.getBoundingClientRect().height : 70;
-        const targetTop = celebrantsSection.getBoundingClientRect().top + window.scrollY - headerHeight - 16;
-        window.scrollTo({
-          top: targetTop,
-          behavior: 'smooth'
-        });
-      }
-    }
   };
 
-  // Wire up circular navigation buttons
-  celebrantNavItems.forEach((btn, index) => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      activateCelebrant(btn.dataset.target, false);
-      btn.focus();
-    });
-
-    // Keyboard support for WAI-ARIA tabs (ArrowLeft, ArrowRight, Home, End)
-    btn.addEventListener('keydown', (e) => {
-      let targetIndex = -1;
-      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
-        e.preventDefault();
-        targetIndex = (index + 1) % celebrantNavItems.length;
-      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
-        e.preventDefault();
-        targetIndex = (index - 1 + celebrantNavItems.length) % celebrantNavItems.length;
-      } else if (e.key === 'Home') {
-        e.preventDefault();
-        targetIndex = 0;
-      } else if (e.key === 'End') {
-        e.preventDefault();
-        targetIndex = celebrantNavItems.length - 1;
-      }
-
-      if (targetIndex >= 0) {
-        const targetBtn = celebrantNavItems[targetIndex];
-        targetBtn.focus();
-        activateCelebrant(targetBtn.dataset.target, false);
-      }
-    });
-  });
-
-  // Wire up hero card buttons & card clicks
-  heroCards.forEach((card) => {
-    card.addEventListener('click', () => {
-      const targetId = card.dataset.target;
-      activateCelebrant(targetId, true);
-    });
-  });
-
-  viewTributeBtns.forEach((btn) => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const targetId = btn.dataset.target;
-      activateCelebrant(targetId, true);
-    });
-  });
-
-  // Wire up "Return to Honourees" links with smooth offset scrolling
-  const returnLinks = Array.from(document.querySelectorAll('.return-link'));
-  returnLinks.forEach((link) => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      const selectionRegion = document.getElementById('celebrants-select') || document.getElementById('top');
-      if (selectionRegion) {
-        const headerHeight = headerBar ? headerBar.getBoundingClientRect().height : 70;
-        const targetTop = selectionRegion.getBoundingClientRect().top + window.scrollY - headerHeight - 20;
-        window.scrollTo({
-          top: targetTop,
-          behavior: 'smooth'
-        });
-        selectionRegion.focus?.();
-      }
-    });
-  });
-
-  // Check URL hash on initial load (e.g. #celebrant-akintayo)
-  const initialHash = window.location.hash.replace('#', '');
-  if (['celebrant-akinwale', 'celebrant-akintayo', 'celebrant-adedeji'].includes(initialHash)) {
-    activateCelebrant(initialHash, false);
-  }
-
   // ==========================================================================
-  // 3. Centralized Audio Controller Engine
+  // 3. Persistent Authoritative Audio Controller
   // ==========================================================================
   const sharedAudioElement = document.getElementById('tribute-audio');
   if (!sharedAudioElement) return;
 
   const audioController = {
-    // Single shared reference to the HTML5 audio element
+    // Single shared reference to the persistent HTML5 audio element
     audio: sharedAudioElement,
     isPlayPending: false,
     hasFallenBackToMp3: false,
     lastVolume: 1,
     isDraggingProgress: false,
-
-    // Centralized UI elements cache
-    elements: {
-      audioSection: document.getElementById('tribute-audio-section'),
-      audioStatus: document.getElementById('audio-status'),
-
-      // 1. Homepage Play/Pause button
-      homePlayBtn: document.getElementById('home-play-btn'),
-      homePlaySvg: document.getElementById('home-play-svg'),
-      homePauseSvg: document.getElementById('home-pause-svg'),
-      homePlayText: document.getElementById('home-play-text'),
-
-      // 2. Celebrate With Us button
-      celebrateBtn: document.getElementById('celebrate-btn'),
-      celebratePlaySvg: document.getElementById('celebrate-play-svg'),
-      celebratePauseSvg: document.getElementById('celebrate-pause-svg'),
-
-      // 3. Floating audio player ("IDU Nov Song")
-      floatingShortcut: document.getElementById('floating-music-shortcut'),
-      floatingPlayerToggle: document.getElementById('floating-player-toggle'),
-      floatingPlaySvg: document.getElementById('floating-play-svg'),
-      floatingPauseSvg: document.getElementById('floating-pause-svg'),
-
-      // 4. Navigation Bar circular Play/Pause button
-      navMusicBtn: document.getElementById('nav-music-btn'),
-      navPlaySvg: document.getElementById('nav-play-svg'),
-      navPauseSvg: document.getElementById('nav-pause-svg'),
-
-      // 5. Dedicated in-section player
-      sectionPlayBtn: document.getElementById('section-play-btn'),
-      sectionPlayIcon: document.getElementById('section-play-icon'),
-      sectionPauseIcon: document.getElementById('section-pause-icon'),
-
-      // Scrubbing, timestamps & progress
-      timeCurrent: document.getElementById('time-current'),
-      timeTotal: document.getElementById('time-total'),
-      progressContainer: document.getElementById('progress-container'),
-      progressFill: document.getElementById('progress-fill'),
-      progressScrubber: document.getElementById('progress-scrubber'),
-
-      // Volume controls
-      volumeBtn: document.getElementById('volume-btn'),
-      volHighSvg: document.getElementById('vol-high-svg'),
-      volMutedSvg: document.getElementById('vol-muted-svg'),
-      volumeSlider: document.getElementById('volume-slider')
-    },
+    elements: {},
 
     // Format seconds to mm:ss
     formatTime(secs) {
@@ -211,34 +52,65 @@
       return `${m}:${s < 10 ? '0' : ''}${s}`;
     },
 
-    // Authoritative check if the audio is currently playing
+    // Authoritative check if the audio is currently actively playing
     isPlaying() {
       return !this.audio.paused && !this.audio.ended && this.audio.currentTime > 0;
     },
 
-    // Update all button icons, labels and classes based on audio state
+    // Cache current DOM elements across route changes
+    cacheElements() {
+      this.elements = {
+        audioSection: document.getElementById('tribute-audio-section'),
+        audioStatus: document.getElementById('audio-status'),
+
+        // 1. Celebrate With Us button
+        celebrateBtn: document.getElementById('celebrate-btn'),
+        celebratePlaySvg: document.getElementById('celebrate-play-svg'),
+        celebratePauseSvg: document.getElementById('celebrate-pause-svg'),
+
+        // 2. Floating audio player ("IDU Nov Song")
+        floatingShortcut: document.getElementById('floating-music-shortcut'),
+        floatingPlayerToggle: document.getElementById('floating-player-toggle'),
+        floatingPlaySvg: document.getElementById('floating-play-svg'),
+        floatingPauseSvg: document.getElementById('floating-pause-svg'),
+
+        // 3. Navigation Bar circular Play/Pause button
+        navMusicBtn: document.getElementById('nav-music-btn'),
+        navPlaySvg: document.getElementById('nav-play-svg'),
+        navPauseSvg: document.getElementById('nav-pause-svg'),
+
+        // 4. Dedicated in-section player
+        sectionPlayBtn: document.getElementById('section-play-btn'),
+        sectionPlayIcon: document.getElementById('section-play-icon'),
+        sectionPauseIcon: document.getElementById('section-pause-icon'),
+
+        // Scrubbing, timestamps & progress
+        timeCurrent: document.getElementById('time-current'),
+        timeTotal: document.getElementById('time-total'),
+        progressContainer: document.getElementById('progress-container'),
+        progressFill: document.getElementById('progress-fill'),
+        progressScrubber: document.getElementById('progress-scrubber'),
+
+        // Equalizer
+        sectionEqualizer: document.getElementById('section-equalizer'),
+
+        // Volume controls
+        volumeBtn: document.getElementById('volume-btn'),
+        volHighSvg: document.getElementById('vol-high-svg'),
+        volMutedSvg: document.getElementById('vol-muted-svg'),
+        volumeSlider: document.getElementById('volume-slider')
+      };
+    },
+
+    // Update all button icons, labels and classes based on actual audio element state
     updateUI(forcePlayingState) {
-      // Authoritatively derive active playing state directly from the HTML5 audio element
       const active = forcePlayingState !== undefined
         ? Boolean(forcePlayingState && !this.audio.paused && !this.audio.ended)
         : Boolean(!this.audio.paused && !this.audio.ended);
 
       const el = this.elements;
 
-      // 1. Homepage Play/Pause button
-      if (el.homePlayBtn) {
-        el.homePlayBtn.classList.toggle('is-playing', active);
-        el.homePlayBtn.setAttribute('aria-label', active ? 'Pause tribute song' : 'Play tribute song');
-      }
-      if (el.homePlaySvg && el.homePauseSvg) {
-        el.homePlaySvg.style.display = active ? 'none' : 'block';
-        el.homePauseSvg.style.display = active ? 'block' : 'none';
-      }
-      if (el.homePlayText) {
-        el.homePlayText.textContent = active ? 'Pause Tribute Song' : 'Play Tribute Song';
-      }
-
-      // 2. Celebrate With Us button
+      // 1. Celebrate With Us button
       if (el.celebrateBtn) {
         el.celebrateBtn.classList.toggle('is-playing', active);
         el.celebrateBtn.setAttribute('aria-label', active ? 'Pause tribute song' : 'Play tribute song');
@@ -248,7 +120,7 @@
         el.celebratePauseSvg.style.display = active ? 'block' : 'none';
       }
 
-      // 3. Floating audio player ("IDU Nov Song")
+      // 2. Floating audio player ("IDU Nov Song")
       if (el.floatingShortcut) {
         el.floatingShortcut.classList.toggle('is-playing', active);
       }
@@ -261,7 +133,7 @@
         el.floatingPauseSvg.style.display = active ? 'block' : 'none';
       }
 
-      // 4. Navbar circular Play/Pause button
+      // 3. Navbar circular Play/Pause button
       if (el.navMusicBtn) {
         el.navMusicBtn.classList.toggle('is-playing', active);
         el.navMusicBtn.setAttribute('aria-label', active ? 'Pause tribute soundtrack' : 'Play tribute soundtrack');
@@ -271,7 +143,7 @@
         el.navPauseSvg.style.display = active ? 'block' : 'none';
       }
 
-      // 5. Dedicated in-section player
+      // 4. Dedicated in-section player
       if (el.audioSection) {
         el.audioSection.classList.toggle('is-playing', active);
       }
@@ -284,20 +156,17 @@
         el.sectionPlayBtn.setAttribute('aria-label', active ? 'Pause tribute audio' : 'Play tribute audio');
         const text = el.sectionPlayBtn.querySelector('.btn-text');
         if (text) {
-          text.textContent = active ? 'Pause Tribute Music' : 'Play Tribute Music';
+          text.textContent = active ? 'Pause' : 'Play';
         }
       }
 
-      // Status text readout
-      if (el.audioStatus) {
-        if (active) {
-          el.audioStatus.textContent = 'Now Playing · Official Tribute Soundtrack (IDU DFW)';
-        } else if (this.audio.ended) {
-          el.audioStatus.textContent = 'Official Mastered Tribute Soundtrack · Tap Play to listen again';
-        } else {
-          el.audioStatus.textContent = 'Official Mastered Tribute Soundtrack · Tap Play to listen';
-        }
+      // Equalizer bars
+      if (el.sectionEqualizer) {
+        el.sectionEqualizer.classList.toggle('is-active', active);
       }
+
+      this.updateProgressUI();
+      this.updateVolumeUI();
     },
 
     // Centralized Play/Pause toggle method
@@ -321,12 +190,19 @@
             })
             .catch((err) => {
               this.isPlayPending = false;
-              console.warn('Playback initiation error:', err);
+              console.warn('Playback request prevented:', err.name, err.message);
+
+              // Auto-fallback to MP3 source if format decoding error occurred
+              if (!this.hasFallenBackToMp3) {
+                this.hasFallenBackToMp3 = true;
+                this.audio.src = '/assets/IDUDFW-tribute.mp3';
+                this.audio.load();
+                this.audio.play().catch((e) => {
+                  console.warn('MP3 fallback playback attempt:', e.message);
+                });
+              }
               this.updateUI(false);
             });
-        } else {
-          this.isPlayPending = false;
-          this.updateUI(true);
         }
       } else {
         this.audio.pause();
@@ -334,188 +210,155 @@
       }
     },
 
-    // Centralized reset to 'Play' icon state when track ends
-    resetToPlay() {
-      this.audio.currentTime = 0;
-      this.updateUI(false);
-
+    // Update progress bar and time readouts
+    updateProgressUI() {
       const el = this.elements;
-      if (el.progressFill) el.progressFill.style.width = '0%';
-      if (el.progressScrubber) el.progressScrubber.style.left = '0%';
-      if (el.timeCurrent) el.timeCurrent.textContent = '0:00';
-      if (el.progressContainer) {
-        el.progressContainer.setAttribute('aria-valuenow', '0');
+      const current = this.audio.currentTime || 0;
+      const duration = this.audio.duration && !isNaN(this.audio.duration) && this.audio.duration > 0
+        ? this.audio.duration
+        : 109.36; // 1:49 default known track duration
+
+      if (el.timeCurrent) {
+        el.timeCurrent.textContent = this.formatTime(current);
       }
-      if (el.audioStatus) {
-        el.audioStatus.textContent = 'Official Mastered Tribute Soundtrack · Tap Play to listen again';
+      if (el.timeTotal) {
+        el.timeTotal.textContent = this.formatTime(duration);
+      }
+
+      if (!this.isDraggingProgress && el.progressFill && el.progressContainer) {
+        const pct = Math.min(Math.max((current / duration) * 100, 0), 100);
+        el.progressFill.style.width = `${pct}%`;
+        if (el.progressScrubber) {
+          el.progressScrubber.style.left = `${pct}%`;
+        }
+        el.progressContainer.setAttribute('aria-valuenow', Math.round(pct).toString());
       }
     },
 
-    // Update volume UI
+    // Update volume icon and slider state
     updateVolumeUI() {
-      const isMuted = this.audio.muted || this.audio.volume === 0;
       const el = this.elements;
+      const isMuted = this.audio.muted || this.audio.volume === 0;
+
       if (el.volHighSvg && el.volMutedSvg) {
         el.volHighSvg.style.display = isMuted ? 'none' : 'block';
         el.volMutedSvg.style.display = isMuted ? 'block' : 'none';
       }
+
       if (el.volumeSlider) {
-        el.volumeSlider.value = isMuted ? 0 : this.audio.volume;
+        el.volumeSlider.value = isMuted ? '0' : this.audio.volume.toString();
       }
     },
 
-    // Handle M4A decoding fallback to MP3
-    handleAudioError(e) {
-      if (!this.hasFallenBackToMp3) {
-        this.hasFallenBackToMp3 = true;
-        console.warn('Audio issue with M4A; activating MP3 fallback...', e);
-        this.audio.src = '/assets/IDUDFW-tribute.mp3';
-        this.audio.load();
-      } else {
-        console.error('All soundtrack sources failed to load.');
-        if (this.elements.audioStatus) {
-          this.elements.audioStatus.textContent = 'Audio playback currently unavailable. Please verify network access.';
-        }
-        this.updateUI(false);
+    // Reset all controls cleanly to the Play state upon track completion
+    resetToPlay() {
+      try {
+        this.audio.pause();
+        this.audio.currentTime = 0;
+      } catch (err) {
+        console.warn('Reset rewind error:', err);
       }
-    },
 
-    // Seek helper for progress bar click / drag
-    seekFromEvent(e) {
-      const el = this.elements;
-      if (!el.progressContainer) return;
-
-      const duration = this.audio.duration && !isNaN(this.audio.duration) && isFinite(this.audio.duration)
-        ? this.audio.duration
-        : 109.36;
-
-      const rect = el.progressContainer.getBoundingClientRect();
-      const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-      const clickX = Math.max(0, Math.min(clientX - rect.left, rect.width));
-      const targetPct = clickX / rect.width;
-
-      this.audio.currentTime = targetPct * duration;
-      if (el.timeCurrent) el.timeCurrent.textContent = this.formatTime(this.audio.currentTime);
-      if (el.progressFill) el.progressFill.style.width = `${targetPct * 100}%`;
-      if (el.progressScrubber) el.progressScrubber.style.left = `${targetPct * 100}%`;
-    },
-
-    // Initialize all event listeners centrally
-    init() {
       const el = this.elements;
 
-      // 1. Wire up click listeners to all 5 Play/Pause buttons
-      const controlButtons = [
-        el.homePlayBtn,
-        el.celebrateBtn,
-        el.floatingPlayerToggle,
-        el.navMusicBtn,
-        el.sectionPlayBtn
-      ];
+      if (el.progressFill) el.progressFill.style.width = '0%';
+      if (el.progressScrubber) el.progressScrubber.style.left = '0%';
+      if (el.timeCurrent) el.timeCurrent.textContent = '0:00';
+      if (el.progressContainer) el.progressContainer.setAttribute('aria-valuenow', '0');
 
-      controlButtons.forEach((btn) => {
-        if (btn) {
-          btn.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            this.togglePlay();
-          });
-        }
-      });
+      this.updateUI(false);
+    },
 
-      // 2. Centralized HTML5 audio state listeners
-      this.audio.addEventListener('play', () => this.updateUI(true));
-      this.audio.addEventListener('playing', () => this.updateUI(true));
-      this.audio.addEventListener('pause', () => this.updateUI(false));
-      this.audio.addEventListener('waiting', () => {
-        if (el.audioStatus && !this.audio.paused && !this.audio.ended) {
-          el.audioStatus.textContent = 'Loading tribute audio...';
-        }
-      });
+    // Bind event listeners to current page controls
+    bindControls() {
+      const el = this.elements;
 
-      // 3. Audio track completion: unconditionally reset all buttons to 'Play' icon state
-      this.audio.addEventListener('ended', () => this.resetToPlay());
-      this.audio.addEventListener('emptied', () => this.updateUI(false));
-      this.audio.addEventListener('abort', () => this.updateUI(false));
-
-      // 4. Source error handlers with fallback
-      this.audio.addEventListener('error', (e) => this.handleAudioError(e), true);
-      this.audio.querySelectorAll('source').forEach((s) => {
-        s.addEventListener('error', () => {
-          if (s.src.endsWith('.m4a') && !this.hasFallenBackToMp3) {
-            this.handleAudioError();
-          }
+      // 1. Celebrate button
+      if (el.celebrateBtn && !el.celebrateBtn.dataset.audioBound) {
+        el.celebrateBtn.dataset.audioBound = 'true';
+        el.celebrateBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          this.togglePlay();
         });
-      });
+      }
 
-      // 5. Duration metadata
-      const updateDuration = () => {
-        if (el.timeTotal && this.audio.duration && !isNaN(this.audio.duration) && isFinite(this.audio.duration)) {
-          el.timeTotal.textContent = this.formatTime(this.audio.duration);
-        }
-      };
-      this.audio.addEventListener('loadedmetadata', updateDuration);
-      this.audio.addEventListener('durationchange', updateDuration);
+      // 2. Floating pill player
+      if (el.floatingPlayerToggle && !el.floatingPlayerToggle.dataset.audioBound) {
+        el.floatingPlayerToggle.dataset.audioBound = 'true';
+        el.floatingPlayerToggle.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          this.togglePlay();
+        });
+      }
 
-      // 6. Timeupdate listener
-      this.audio.addEventListener('timeupdate', () => {
-        // If track completed, ensure UI resets to 'Play'
-        if (this.audio.ended) {
-          this.resetToPlay();
-          return;
-        }
+      // 3. Navbar circular button
+      if (el.navMusicBtn && !el.navMusicBtn.dataset.audioBound) {
+        el.navMusicBtn.dataset.audioBound = 'true';
+        el.navMusicBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          this.togglePlay();
+        });
+      }
 
-        const total = this.audio.duration && !isNaN(this.audio.duration) && isFinite(this.audio.duration)
-          ? this.audio.duration
-          : 109.36;
-        const current = this.audio.currentTime;
+      // 4. Section Play button
+      if (el.sectionPlayBtn && !el.sectionPlayBtn.dataset.audioBound) {
+        el.sectionPlayBtn.dataset.audioBound = 'true';
+        el.sectionPlayBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          this.togglePlay();
+        });
+      }
 
-        // Completion guard for edge cases
-        if (total > 0 && current >= total - 0.05 && this.audio.paused) {
-          this.resetToPlay();
-          return;
-        }
+      // 5. Scrubber & Seek
+      if (el.progressContainer && !el.progressContainer.dataset.audioBound) {
+        el.progressContainer.dataset.audioBound = 'true';
 
-        const pct = Math.min((current / total) * 100, 100);
+        const seekFromEvent = (clientX) => {
+          const rect = el.progressContainer.getBoundingClientRect();
+          const offsetX = Math.max(0, Math.min(clientX - rect.left, rect.width));
+          const pct = rect.width > 0 ? offsetX / rect.width : 0;
+          const duration = this.audio.duration && !isNaN(this.audio.duration) && this.audio.duration > 0
+            ? this.audio.duration
+            : 109.36;
+          this.audio.currentTime = pct * duration;
+          this.updateProgressUI();
+        };
 
-        if (el.timeCurrent) el.timeCurrent.textContent = this.formatTime(current);
-        if (el.progressFill) el.progressFill.style.width = `${pct}%`;
-        if (el.progressScrubber) el.progressScrubber.style.left = `${pct}%`;
-        if (el.progressContainer) {
-          el.progressContainer.setAttribute('aria-valuenow', Math.round(pct).toString());
-        }
-      });
-
-      // 7. Interactive seeking on progress container
-      if (el.progressContainer) {
         el.progressContainer.addEventListener('mousedown', (e) => {
           this.isDraggingProgress = true;
-          this.seekFromEvent(e);
+          seekFromEvent(e.clientX);
+          const onMouseMove = (moveEvent) => {
+            if (this.isDraggingProgress) seekFromEvent(moveEvent.clientX);
+          };
+          const onMouseUp = () => {
+            this.isDraggingProgress = false;
+            window.removeEventListener('mousemove', onMouseMove);
+            window.removeEventListener('mouseup', onMouseUp);
+          };
+          window.addEventListener('mousemove', onMouseMove);
+          window.addEventListener('mouseup', onMouseUp);
         });
 
         el.progressContainer.addEventListener('touchstart', (e) => {
+          if (!e.touches || !e.touches[0]) return;
           this.isDraggingProgress = true;
-          this.seekFromEvent(e);
+          seekFromEvent(e.touches[0].clientX);
         }, { passive: true });
 
-        window.addEventListener('mousemove', (e) => {
-          if (this.isDraggingProgress) this.seekFromEvent(e);
-        });
-
-        window.addEventListener('touchmove', (e) => {
-          if (this.isDraggingProgress) this.seekFromEvent(e);
+        el.progressContainer.addEventListener('touchmove', (e) => {
+          if (!this.isDraggingProgress || !e.touches || !e.touches[0]) return;
+          seekFromEvent(e.touches[0].clientX);
         }, { passive: true });
 
-        window.addEventListener('mouseup', () => {
+        el.progressContainer.addEventListener('touchend', () => {
           this.isDraggingProgress = false;
-        });
-
-        window.addEventListener('touchend', () => {
-          this.isDraggingProgress = false;
-        });
+        }, { passive: true });
 
         el.progressContainer.addEventListener('keydown', (e) => {
-          const duration = this.audio.duration && !isNaN(this.audio.duration) && isFinite(this.audio.duration)
+          const duration = this.audio.duration && !isNaN(this.audio.duration) && this.audio.duration > 0
             ? this.audio.duration
             : 109.36;
           if (e.key === 'ArrowRight' || e.key === 'ArrowUp') {
@@ -528,8 +371,9 @@
         });
       }
 
-      // 8. Volume Controls
-      if (el.volumeBtn) {
+      // 6. Volume button & slider
+      if (el.volumeBtn && !el.volumeBtn.dataset.audioBound) {
+        el.volumeBtn.dataset.audioBound = 'true';
         el.volumeBtn.addEventListener('click', () => {
           try {
             if (this.audio.muted || this.audio.volume === 0) {
@@ -546,7 +390,8 @@
         });
       }
 
-      if (el.volumeSlider) {
+      if (el.volumeSlider && !el.volumeSlider.dataset.audioBound) {
+        el.volumeSlider.dataset.audioBound = 'true';
         el.volumeSlider.addEventListener('input', (e) => {
           try {
             const val = parseFloat(e.target.value);
@@ -559,8 +404,24 @@
           this.updateVolumeUI();
         });
       }
+    },
 
-      // 9. Autoplay attempt on load with graceful browser policy handling
+    // One-time master initialization of persistent audio listeners
+    init() {
+      this.cacheElements();
+      this.bindControls();
+
+      // Audio media element authoritative events (bound once to persistent audio)
+      this.audio.addEventListener('play', () => this.updateUI(true));
+      this.audio.addEventListener('playing', () => this.updateUI(true));
+      this.audio.addEventListener('pause', () => this.updateUI(false));
+      this.audio.addEventListener('timeupdate', () => this.updateProgressUI());
+      this.audio.addEventListener('ended', () => this.resetToPlay());
+      this.audio.addEventListener('emptied', () => this.updateUI(false));
+      this.audio.addEventListener('abort', () => this.updateUI(false));
+      this.audio.addEventListener('loadedmetadata', () => this.updateProgressUI());
+
+      // Attempt gentle autoplay on initial page load per browser policy
       const attemptAutoplay = () => {
         const playPromise = this.audio.play();
         if (playPromise !== undefined) {
@@ -569,7 +430,7 @@
               this.updateUI(true);
             })
             .catch((err) => {
-              console.info('Autoplay postponed pending user gesture per browser policy:', err.name || err.message);
+              console.info('Autoplay deferred pending user gesture per browser policy:', err.name || err.message);
               this.updateUI(false);
             });
         }
@@ -583,6 +444,500 @@
     }
   };
 
-  // Initialize centralized audio controller
+  // ==========================================================================
+  // 4. Photo Gallery Lightbox Modal with Full Carousel & Touch Navigation
+  // ==========================================================================
+  const bindGalleryLightbox = () => {
+    const lightboxModal = document.getElementById('lightbox-modal');
+    const lightboxImg = document.getElementById('lightbox-img');
+    const lightboxCaption = document.getElementById('lightbox-caption');
+    const lightboxTitle = document.getElementById('lightbox-title');
+    const lightboxCounter = document.getElementById('lightbox-counter');
+    const lightboxCloseBtn = document.getElementById('lightbox-close-btn');
+    const lightboxPrevBtn = document.getElementById('lightbox-prev-btn');
+    const lightboxNextBtn = document.getElementById('lightbox-next-btn');
+
+    if (!lightboxModal || !lightboxImg || !lightboxCloseBtn) return;
+
+    let galleryItems = Array.from(document.querySelectorAll('.gallery-item'));
+    if (!galleryItems.length) return;
+
+    let currentIndex = 0;
+    let lastActiveElement = null;
+
+    const showIndex = (index) => {
+      galleryItems = Array.from(document.querySelectorAll('.gallery-item'));
+      if (!galleryItems.length) return;
+
+      if (index < 0) {
+        currentIndex = galleryItems.length - 1;
+      } else if (index >= galleryItems.length) {
+        currentIndex = 0;
+      } else {
+        currentIndex = index;
+      }
+
+      const item = galleryItems[currentIndex];
+      const img = item.querySelector('img');
+      if (!img) return;
+
+      const title = item.getAttribute('data-title') || item.querySelector('.gallery-card-title')?.textContent || '';
+      const caption = item.getAttribute('data-caption') || item.querySelector('.gallery-card-desc')?.textContent || img.alt || '';
+
+      lightboxImg.style.opacity = '0.4';
+      lightboxImg.src = img.src;
+      lightboxImg.alt = img.alt || title || caption || 'Celebration photograph';
+
+      lightboxImg.onload = () => {
+        lightboxImg.style.opacity = '1';
+      };
+
+      if (lightboxTitle) {
+        if (title) {
+          lightboxTitle.textContent = title;
+          lightboxTitle.style.display = 'block';
+        } else {
+          lightboxTitle.textContent = '';
+          lightboxTitle.style.display = 'none';
+        }
+      }
+
+      if (lightboxCaption) {
+        lightboxCaption.textContent = caption;
+      }
+
+      if (lightboxCounter) {
+        lightboxCounter.textContent = `Photo ${currentIndex + 1} of ${galleryItems.length}`;
+      }
+
+      if (lightboxPrevBtn && lightboxNextBtn) {
+        const hasMultiple = galleryItems.length > 1;
+        lightboxPrevBtn.style.display = hasMultiple ? 'flex' : 'none';
+        lightboxNextBtn.style.display = hasMultiple ? 'flex' : 'none';
+      }
+    };
+
+    const openLightbox = (index, triggerEl) => {
+      lastActiveElement = triggerEl || document.activeElement;
+      showIndex(index);
+      lightboxModal.classList.add('is-open');
+      lightboxModal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      lightboxCloseBtn.focus();
+    };
+
+    const closeLightbox = () => {
+      lightboxModal.classList.remove('is-open');
+      lightboxModal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      if (lastActiveElement && typeof lastActiveElement.focus === 'function') {
+        lastActiveElement.focus();
+      }
+    };
+
+    galleryItems.forEach((item, idx) => {
+      if (item.dataset.lightboxBound) return;
+      item.dataset.lightboxBound = 'true';
+
+      const handleTrigger = (e) => {
+        e.preventDefault();
+        galleryItems = Array.from(document.querySelectorAll('.gallery-item'));
+        const realIdx = galleryItems.indexOf(item);
+        openLightbox(realIdx !== -1 ? realIdx : idx, item);
+      };
+
+      item.addEventListener('click', handleTrigger);
+      item.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          handleTrigger(e);
+        }
+      });
+    });
+
+    if (lightboxCloseBtn && !lightboxCloseBtn.dataset.lightboxBound) {
+      lightboxCloseBtn.dataset.lightboxBound = 'true';
+      lightboxCloseBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        closeLightbox();
+      });
+    }
+
+    if (lightboxPrevBtn && !lightboxPrevBtn.dataset.lightboxBound) {
+      lightboxPrevBtn.dataset.lightboxBound = 'true';
+      lightboxPrevBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        showIndex(currentIndex - 1);
+      });
+    }
+
+    if (lightboxNextBtn && !lightboxNextBtn.dataset.lightboxBound) {
+      lightboxNextBtn.dataset.lightboxBound = 'true';
+      lightboxNextBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        showIndex(currentIndex + 1);
+      });
+    }
+
+    if (!lightboxModal.dataset.lightboxModalBound) {
+      lightboxModal.dataset.lightboxModalBound = 'true';
+
+      lightboxModal.addEventListener('click', (e) => {
+        if (e.target === lightboxModal) {
+          closeLightbox();
+        }
+      });
+
+      // Keyboard navigation (Escape, ArrowLeft, ArrowRight)
+      document.addEventListener('keydown', (e) => {
+        if (!lightboxModal.classList.contains('is-open')) return;
+        if (e.key === 'Escape') {
+          e.preventDefault();
+          closeLightbox();
+        } else if (e.key === 'ArrowLeft') {
+          e.preventDefault();
+          showIndex(currentIndex - 1);
+        } else if (e.key === 'ArrowRight') {
+          e.preventDefault();
+          showIndex(currentIndex + 1);
+        }
+      });
+
+      // Mobile touch swipe gestures
+      let touchStartX = 0;
+      let touchStartY = 0;
+
+      lightboxModal.addEventListener('touchstart', (e) => {
+        if (e.touches && e.touches.length > 0) {
+          touchStartX = e.touches[0].clientX;
+          touchStartY = e.touches[0].clientY;
+        }
+      }, { passive: true });
+
+      lightboxModal.addEventListener('touchend', (e) => {
+        if (!e.changedTouches || e.changedTouches.length === 0) return;
+        const touchEndX = e.changedTouches[0].clientX;
+        const touchEndY = e.changedTouches[0].clientY;
+        const diffX = touchEndX - touchStartX;
+        const diffY = touchEndY - touchStartY;
+
+        if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 40) {
+          if (diffX < 0) {
+            showIndex(currentIndex + 1); // Swipe left -> Next
+          } else {
+            showIndex(currentIndex - 1); // Swipe right -> Prev
+          }
+        }
+      }, { passive: true });
+    }
+  };
+
+  // ==========================================================================
+  // 5. Celebrant Feature Card Smooth Navigation & Highlight
+  // ==========================================================================
+  const checkGalleryEmptyState = () => {
+    const gallerySection = document.getElementById('gallery') || document.querySelector('.tribute-gallery-section');
+    if (!gallerySection) return;
+    const items = gallerySection.querySelectorAll('.gallery-item');
+    let emptyState = gallerySection.querySelector('.gallery-empty-state');
+    if (items.length === 0) {
+      if (!emptyState) {
+        emptyState = document.createElement('div');
+        emptyState.className = 'gallery-empty-state';
+        emptyState.textContent = 'No photographs have been added to this gallery yet. Please check back soon.';
+        const grid = gallerySection.querySelector('.gallery-grid, .tribute-personal-gallery-grid');
+        if (grid) {
+          grid.appendChild(emptyState);
+        } else {
+          gallerySection.appendChild(emptyState);
+        }
+      }
+      emptyState.style.display = 'block';
+    } else if (emptyState) {
+      emptyState.style.display = 'none';
+    }
+  };
+
+  const bindFeatureCardNav = () => {
+    const featureCardLinks = Array.from(document.querySelectorAll('a[href*="#celebrant-card-"]'));
+    featureCardLinks.forEach((link) => {
+      if (link.dataset.navBound) return;
+      link.dataset.navBound = 'true';
+
+      link.addEventListener('click', (e) => {
+        const href = link.getAttribute('href');
+        const hashIdx = href.indexOf('#');
+        if (hashIdx !== -1) {
+          const hash = href.slice(hashIdx);
+          const targetCard = document.querySelector(hash);
+          if (targetCard) {
+            e.preventDefault();
+            targetCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            try {
+              history.pushState(null, '', hash);
+            } catch (_) {}
+            targetCard.classList.add('is-highlighted');
+            setTimeout(() => {
+              targetCard.classList.remove('is-highlighted');
+            }, 2400);
+          }
+        }
+      });
+    });
+  };
+
+  // ==========================================================================
+  // 6. Persistent Seamless Router for Music Continuity Across Pages
+  // ==========================================================================
+  const rebindPageContent = () => {
+    audioController.cacheElements();
+    audioController.bindControls();
+    audioController.updateUI();
+    audioController.updateProgressUI();
+    bindGalleryLightbox();
+    checkGalleryEmptyState();
+    initDynamicYear();
+    bindFeatureCardNav();
+    bindThemeToggle();
+  };
+
+  const navigatePage = async (urlStr, targetHash, pushHistory = true) => {
+    const currentMain = document.querySelector('main');
+    if (currentMain) {
+      currentMain.classList.add('is-page-transitioning');
+    }
+
+    try {
+      const res = await fetch(urlStr);
+      if (!res.ok) {
+        window.location.href = urlStr;
+        return;
+      }
+      const htmlText = await res.text();
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(htmlText, 'text/html');
+
+      const newMain = doc.querySelector('main');
+      if (!newMain || !currentMain) {
+        window.location.href = urlStr;
+        return;
+      }
+
+      // Seamlessly swap only the <main> container; persistent <audio> and <header> are untouched
+      currentMain.innerHTML = newMain.innerHTML;
+      currentMain.className = newMain.className;
+      currentMain.id = newMain.id;
+
+      // Update page metadata and document title
+      document.title = doc.title;
+      document.body.className = doc.body.className;
+
+      if (pushHistory) {
+        window.history.pushState({ url: urlStr }, '', urlStr);
+      }
+
+      // Re-bind all page-specific UI components to the persistent audio engine
+      rebindPageContent();
+
+      // Handle scrolling to anchor or top of the page
+      if (targetHash) {
+        setTimeout(() => {
+          const targetEl = document.querySelector(targetHash);
+          if (targetEl) {
+            targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            if (targetHash.startsWith('#celebrant-card-')) {
+              targetEl.classList.add('is-highlighted');
+              setTimeout(() => {
+                targetEl.classList.remove('is-highlighted');
+              }, 2400);
+            } else if (targetHash === '#gallery') {
+              targetEl.classList.add('is-highlighted');
+              setTimeout(() => {
+                targetEl.classList.remove('is-highlighted');
+              }, 2400);
+            }
+          }
+        }, 50);
+      } else {
+        window.scrollTo({ top: 0, behavior: 'instant' });
+      }
+    } catch (err) {
+      console.warn('Seamless navigation error, using standard page load:', err);
+      window.location.href = urlStr;
+    } finally {
+      if (currentMain) {
+        currentMain.classList.remove('is-page-transitioning');
+      }
+    }
+  };
+
+  const initPageRouter = () => {
+    document.addEventListener('click', (e) => {
+      // Allow new tab open with middle click or modifier keys
+      if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+
+      const link = e.target.closest('a');
+      if (!link) return;
+
+      const href = link.getAttribute('href');
+      if (!href) return;
+
+      // Ignore protocols, mailto, tel, whatsapp or external links
+      if (
+        href.startsWith('mailto:') ||
+        href.startsWith('tel:') ||
+        href.startsWith('https://wa.me/') ||
+        link.target === '_blank'
+      ) {
+        return;
+      }
+
+      const targetUrl = new URL(href, window.location.href);
+
+      // Ignore external origin domains
+      if (targetUrl.origin !== window.location.origin) return;
+
+      // In-page hash jumps
+      if (targetUrl.pathname === window.location.pathname) {
+        if (targetUrl.hash) {
+          const targetEl = document.querySelector(targetUrl.hash);
+          if (targetEl) {
+            e.preventDefault();
+            targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            try {
+              history.pushState(null, '', targetUrl.hash);
+            } catch (_) {}
+            if (targetUrl.hash.startsWith('#celebrant-card-')) {
+              targetEl.classList.add('is-highlighted');
+              setTimeout(() => {
+                targetEl.classList.remove('is-highlighted');
+              }, 2400);
+            } else if (targetUrl.hash === '#gallery') {
+              targetEl.classList.add('is-highlighted');
+              setTimeout(() => {
+                targetEl.classList.remove('is-highlighted');
+              }, 2400);
+              const firstItem = targetEl.querySelector('.gallery-item');
+              if (firstItem) {
+                firstItem.focus({ preventScroll: true });
+              }
+            }
+            return;
+          }
+        }
+      }
+
+      // Internal HTML page transitions (index.html, tribute-*.html)
+      if (
+        targetUrl.pathname.endsWith('.html') ||
+        targetUrl.pathname === '/' ||
+        targetUrl.pathname === ''
+      ) {
+        e.preventDefault();
+        navigatePage(targetUrl.href, targetUrl.hash);
+      }
+    });
+
+    // Handle browser Back / Forward buttons without audio interruption
+    window.addEventListener('popstate', () => {
+      navigatePage(window.location.href, window.location.hash, false);
+    });
+  };
+
+  // ==========================================================================
+  // 7. Dark / Light Theme Controller & Toggle Engine
+  // ==========================================================================
+  const getPreferredTheme = () => {
+    try {
+      const saved = localStorage.getItem('idu-theme');
+      if (saved === 'dark' || saved === 'light') return saved;
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        return 'dark';
+      }
+    } catch (_) {}
+    return 'light';
+  };
+
+  const applyTheme = (theme) => {
+    document.documentElement.setAttribute('data-theme', theme);
+    document.documentElement.classList.toggle('dark', theme === 'dark');
+    try {
+      localStorage.setItem('idu-theme', theme);
+    } catch (_) {}
+
+    const toggleBtns = document.querySelectorAll('.theme-toggle-btn');
+    toggleBtns.forEach((btn) => {
+      btn.setAttribute('aria-label', theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
+      btn.setAttribute('title', theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
+      btn.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
+    });
+  };
+
+  const toggleTheme = () => {
+    const current = document.documentElement.getAttribute('data-theme') || 'light';
+    const next = current === 'dark' ? 'light' : 'dark';
+    applyTheme(next);
+  };
+
+  const bindThemeToggle = () => {
+    const toggleBtns = document.querySelectorAll('.theme-toggle-btn');
+    toggleBtns.forEach((btn) => {
+      if (btn.dataset.themeBound) return;
+      btn.dataset.themeBound = 'true';
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        toggleTheme();
+      });
+    });
+  };
+
+  if (window.matchMedia) {
+    try {
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+        if (!localStorage.getItem('idu-theme')) {
+          applyTheme(e.matches ? 'dark' : 'light');
+        }
+      });
+    } catch (_) {}
+  }
+
+  // ==========================================================================
+  // 8. Initial Startup Execution
+  // ==========================================================================
+  applyTheme(getPreferredTheme());
+  bindThemeToggle();
   audioController.init();
+  bindGalleryLightbox();
+  checkGalleryEmptyState();
+  initDynamicYear();
+  bindFeatureCardNav();
+  initPageRouter();
+
+  // Check initial incoming URL hash (e.g. index.html#celebrant-card-adeniji or #gallery)
+  if (window.location.hash) {
+    if (window.location.hash.startsWith('#celebrant-card-')) {
+      setTimeout(() => {
+        const targetCard = document.querySelector(window.location.hash);
+        if (targetCard) {
+          targetCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          targetCard.classList.add('is-highlighted');
+          setTimeout(() => {
+            targetCard.classList.remove('is-highlighted');
+          }, 2400);
+        }
+      }, 150);
+    } else if (window.location.hash === '#gallery') {
+      setTimeout(() => {
+        const targetGallery = document.getElementById('gallery') || document.querySelector('.tribute-gallery-section');
+        if (targetGallery) {
+          targetGallery.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          targetGallery.classList.add('is-highlighted');
+          setTimeout(() => {
+            targetGallery.classList.remove('is-highlighted');
+          }, 2400);
+        }
+      }, 150);
+    }
+  }
 })();

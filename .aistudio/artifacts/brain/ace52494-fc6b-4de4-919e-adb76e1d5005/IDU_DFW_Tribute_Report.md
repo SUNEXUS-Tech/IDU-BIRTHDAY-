@@ -4,164 +4,239 @@
 
 ## 1. Executive Overview & Purpose
 
-The **IDU Dallas–Fort Worth November Birthday Tribute** is an editorial, responsive, single-page web deliverable designed for the **Ibadan Descendants Union USA Inc., Dallas–Fort Worth Chapter**.
+The **IDU Dallas–Fort Worth November Birthday Tribute** is an editorial, responsive web deliverable created for the **Ibadan Descendants Union USA Inc., Dallas–Fort Worth Chapter** (`https://idudfwceleb.ai.studio`).
 
 Its primary objective is to honour the leadership, service, community presence, and birthdays of three distinguished members during the month of November, celebrating their heritage and contributions to the Union and the broader diaspora community.
 
-* **Tech Stack:** Semantic HTML5, Modular CSS3, Vanilla JavaScript (ES2022).
-* **Architecture:** Zero-dependency static frontend. No bloated runtime frameworks, no databases, no external API calls, and zero tracking scripts.
-* **Server & Preview:** Vite-compatible static delivery served over HTTPS.
+* **Tech Stack:** Semantic HTML5, Modular CSS3, Vanilla TypeScript / JavaScript (ES2022), Vite multi-page build system.
+* **Persistent Audio Architecture:** Seamless client-side application router preventing full document reloads during internal page transitions, guaranteeing 100% continuous music playback across all route changes.
+* **Production Build:** Vite multi-page bundle (`dist/index.html`, `dist/tribute-david-akinwale.html`, `dist/tribute-janet-apesinola.html`, `dist/tribute-john-adeniji.html`, `dist/script.js`, `dist/assets/styles-*.css`).
 
 ---
 
-## 2. Celebrant Records & Official Associations
+## 2. Updated Homepage Content & Structure
 
-All three honourees are commemorated with authentic individual photographic portraits, community and professional titles, personalised tribute paragraphs, and traditional Yorùbá birthday blessings:
+### A. Headline and Supporting Narrative
+The homepage hero section has been updated with the following copy:
+* **Headline:**
+  > **Ibadan Descendants Union, Dallas**
+* **Supporting Text:**
+  > *Celebrating our heritage, honouring our people, and keeping the spirit of Ibadan alive across generations and borders. Together, we celebrate the lives, legacies, and special moments that unite us.*
 
-| Honouree | Birthday Date | Titles & Community Roles | Portrait Asset | Yorùbá Blessing |
-| :--- | :--- | :--- | :--- | :--- |
-| **Chief David Akinwale** | **November 09** | • Otun Baale of Akobo Ojurin<br>• CEO, Providence Arena Group of Companies | `assets/chief-david-akinwale.jpg`<br>*(1030 × 1536 px)* | *Ẹ kú ọjọ́ ìbí. Ọ̀pọ̀ ọdún àti àlàáfíà ni a ń kí yín.* |
-| **Chief Mrs Janet Akintayo** | **November 22** | • Yeye Apesinola of Ibadan Land | `assets/chief-janet-akintayo.jpg`<br>*(866 × 1000 px)* | *Ẹ kú ọjọ́ ìbí. Àlàáfíà, ayọ̀ àti ìbùkún ni a ń fẹ́ fún yín.* |
-| **Chief John Adedeji** | **November 29** | • Financial Secretary, IDU Dallas Chapter<br>• Chief Accountant | `assets/chief-john-adedeji.jpg`<br>*(1030 × 1536 px)* | *Ẹ kú ọjọ́ ìbí. Ọlọ́run kó ọdún púpọ̀ àti ìlera fún yín.* |
+### B. 3-Card Balanced Celebrant Selection Cards
+The top selection cards prominently showcase:
+1. **Chief David Akinwale** — November 09
+2. **Chief (Mrs.) Janet Apesinola** — November 22
+3. **Chief John Adeniji** — November 29
 
-* **Chapter Emblem:** The official seal of **Ibadan Descendants Union USA Inc. Dallas Fort Worth Chapter** (`assets/idu-logo.jpg`, 1514 × 1536 px) is featured in the header identity lockup and in the closing blessing section.
-
----
-
-## 3. Core Features & Editorial Refinements
-
-1. **Removal of Numbered Section & Honouree Labels:**
-   * All numbered section eyebrows (such as `01 / THE OCCASION`, `02 / The Occasion`, `03 / Our Honourees`) and numbered tags (`HONOUREE 01`, `HONOUREE 02`, `HONOUREE 03`) have been removed completely across the entire website.
-   * Eliminates artificial numbering while preserving meaningful headlines, birth dates, official titles, and Yoruba blessings.
-
-2. **Justified Editorial Body Copy (`.tribute-copy`):**
-   * High-end print editorial typography with `text-align: justify; text-justify: inter-word;` applied to introductory paragraphs, occasion descriptions, tribute body copy, and section asides.
-   * Headings, names, roles, buttons, and italicized Yorùbá blessings remain strictly left-aligned for optimal legibility.
-   * Mobile-responsive safeguard: body copy automatically reverts to `text-align: left;` at $\le 480\text{px}$ to prevent uneven spacing on narrow screens.
-
-3. **Section 3 Introductory Text Hierarchy:**
-   * Replaced the side-by-side desktop flex layout with a clean stacked structure.
-   * The headline (`Three lives. One community.`) is immediately followed underneath by the supporting narrative (`Celebrating the people who help keep our shared heritage and community spirit alive.`) at all screen widths.
-
-4. **Three Responsive Portrait Cards as Primary Selection Interface:**
-   * Prominently displays Chief David Akinwale, Chief Mrs Janet Akintayo, and Chief John Adedeji in the hero section.
-   * Features genuine photographs, official titles, birth dates, and an accessible `"View Full Tribute →"` action on each card.
-   * Clicking a card or button seamlessly reveals the corresponding honouree's tribute and smoothly scrolls to the tribute section.
-
-5. **Compact Row of Circular Celebrant Portraits:**
-   * Features circular portraits for all three celebrants arranged in order above the tribute content.
-   * **Signature Double Outline:**
-     * **Inner Outline:** `#18382C` (forest green, 2.5px solid)
-     * **Outer Outline:** `#C99B4B` (muted gold, 2px box-shadow ring)
-   * Includes accessible labels (`"View Chief David Akinwale's tribute"`, etc.), active highlight states (`aria-selected="true"`, glowing halo, scaled avatar), and full WAI-ARIA keyboard navigation (ArrowLeft, ArrowRight, Home, End).
-   * Aligned horizontally on desktop, tablet, and mobile without horizontal overflow.
-
-6. **Tribute Panels & Return Navigation:**
-   * Each tribute panel displays the celebrant's full portrait, official titles, personalized tribute, and Yorùbá blessing with diacritics.
-   * Every panel includes an accessible `"↑ Return to Honourees"` action that smoothly scrolls back to the selection cards with sticky header offset.
-
-7. **Sticky Navigation Bar (`.site-header-bar`):**
-   * Pinned to the top of the viewport with signature gold/green accent bar (`.topline`), frosted glass backdrop blur, and dynamic elevation shadow on scroll.
-   * Includes `scroll-padding-top` ($85\text{px}$ desktop / $72\text{px}$ mobile) so anchors never obscure headings.
-   * **Navbar Music Control (`#nav-music-btn`):**
-     * Small, circular button ($36\text{px} \times 36\text{px}$, responsive $32\text{px}$ on mobile) placed in `.header-actions` alongside the `"Explore"` link.
-     * Styled in deep forest green with gold trim and dynamic active glow animation.
-     * Toggles playback of the official tribute song instantly with real-time Play (`▶`) and Pause (`❚❚`) icon synchronization.
-
-8. **Universal Synchronised 5-Control Audio Architecture (`audioController` Object):**
-   * **Centralized Controller Engine:** Built around a unified `audioController` object that maintains a single authoritative reference to `document.getElementById('tribute-audio')` (`/assets/IDUDFW-tribute.m4a` with MP3 fallback), eliminating fragmented listeners, state drift, and race conditions.
-   * **Single Shared Reference & Authoritative State:** `isPlaying()` and `updateUI()` evaluate active playback strictly against `!audio.paused && !audio.ended`, ensuring zero state desynchronisation.
-   * **Centralized Event Listener Management (`init`):** All click and media event listeners (`play`, `playing`, `pause`, `waiting`, `ended`, `emptied`, `abort`, `timeupdate`, `loadedmetadata`, `error`) are registered centrally through `audioController.init()`.
-   * **Control 1: Homepage Dedicated Play/Pause Button (`#home-play-btn`):**
-     * Prominent high-contrast gold/green button in the celebrants section action row (`.nav-section-actions`).
-     * Displays Play (`▶`) and Pause (`❚❚`) SVG icons with text `"Play Tribute Song"` / `"Pause Tribute Song"`.
-     * Cleanly starts and pauses playback with pending-promise guards.
-   * **Control 2: Celebrate With Us Button (`#celebrate-btn`):**
-     * Converted from a page-anchor link into a primary interactive `<button type="button">`.
-     * Navigation action removed; clicking it directly calls `audioController.togglePlay()`.
-     * Contains responsive Play (`▶`) and Pause (`❚❚`) icon indicators alongside the text.
-   * **Control 3: Compact Permanent Floating Player (`#floating-player-toggle`):**
-     * Anchored permanently at `bottom: 22px; right: 22px` (responsive $14\text{px}$ on mobile).
-     * Displays `"IDU Nov Song"` with circular gold Play/Pause icon badge.
-     * Removed separate player icon, navigation scroll trigger, arrow, and three horizontal dots.
-     * The entire floating pill button is clickable to toggle Play/Pause.
-     * Visual active state (`.is-playing`) reflects audio playback state in real time.
-   * **Control 4: Circular Navbar Music Control (`#nav-music-btn`):**
-     * Pinned in the sticky header bar next to `"Explore"`.
-     * Circular badge ($36\text{px} \times 36\text{px}$) with synchronized Play (`▶`) and Pause (`❚❚`) icons.
-   * **Control 5: Dedicated In-Section HTML5 Audio Player (`#section-play-btn`):**
-     * Located within `#tribute-audio-section`.
-     * Features primary Play/Pause button, interactive scrubbable progress bar, elapsed/total timestamps, volume slider with mute toggle, and dynamic animated equalizer bars.
-   * **Guaranteed Track Completion Reset to 'Play' (`resetToPlay`):**
-     * When the audio track finishes playing, `audioController.resetToPlay()` resets `audio.currentTime = 0`, sets progress bars to `0%`, sets timestamps to `0:00`, and resets all 5 buttons, SVGs, accessibility attributes, and status text back to the 'Play' state. Subsequent clicks cleanly rewind and restart playback from `0:00`.
+Clicking any card smoothly scrolls with sticky header offset to that celebrant's feature card in the Celebrants section (`#celebrants`) and triggers an elegant golden border highlight.
 
 ---
 
-## 4. Responsive Sizing & Breakpoint Matrix
+## 3. Persistent Audio Architecture & Music Continuity
 
-The tribute website has been tested and verified across standard devices and viewport sizes:
-
-| Breakpoint / Device | Hero Cards Grid | Circular Avatar Row | Typography & Spacing | Overflow Status |
-| :--- | :--- | :--- | :--- | :--- |
-| **1920 × 1080 (Ultrawide / Desktop)** | 3 columns (1fr 1fr 1fr), 28px gap | Horizontal inline pill buttons, 54px avatars | Full clamp scale, 4.4rem h1, justified copy | Clean (0px overflow) |
-| **1440 × 900 (Standard Laptop)** | 3 columns, 24px gap | Horizontal inline pill buttons, 54px avatars | 4.0rem h1, justified copy | Clean (0px overflow) |
-| **1024 × 768 (Tablet Landscape)** | 3 columns, 14px gap | Horizontal inline pill buttons, 54px avatars | Scaled card text, justified copy | Clean (0px overflow) |
-| **768 × 1024 (Tablet Portrait)** | Single column stacked cards (max 440px) | Horizontal row, 46px avatars with double outlines | Stacked section headings, justified copy | Clean (0px overflow) |
-| **390 × 844 (Mobile Phone)** | Single column stacked cards, full width | 3 compact avatars side-by-side, 46px avatars | Left-aligned copy ($\le 480\text{px}$), stacked controls | Clean (0px overflow) |
-| **320 × 568 (Compact Mobile)** | Single column cards, 15px padding | 3 compact avatars side-by-side, 40px avatars | 1.75rem h1, 0.68rem avatar titles, 0px overflow | Clean (0px overflow) |
-
----
-
-## 5. Visual Identity & Color Palette
-
-* **Primary Forest Green:** `#10271F` / `#18382C`
-* **Muted Gold Accent:** `#C99B4B`
-* **Light Gold Accent:** `#E7CB91`
-* **Warm Cream Paper:** `#F7F2E8` / `#FFFDF8`
-* **Editorial Ink:** `#1D2923`
-* **Typography:** `Playfair Display` (editorial serif) & `DM Sans` (clean modern sans-serif)
+### The Solution for Uninterrupted Playback
+* **Single Authoritative Media Element:** The `<audio id="tribute-audio">` element is placed outside `<main>`, directly in the persistent application shell.
+* **Seamless Client-Side Page Router (`navigatePage`):** When visitors navigate between the homepage and any individual tribute page (or between celebrants):
+  - Standard full-page browser reloads are intercepted.
+  - The incoming page's `<main>` container is swapped asynchronously with a smooth opacity transition.
+  - Page metadata and `<title>` are updated dynamically.
+  - **The `<audio>` element is NEVER unmounted, reloaded, or destroyed.**
+  - Music playback continues without a microsecond of interruption or resetting.
+* **Synchronized Play/Pause Controls:** Upon route transition, `audioController.cacheElements()` and `bindControls()` dynamically attach to all visible player buttons, immediately synchronizing icon states (`▶` / `❚❚`), scrubber percentages, elapsed timestamps, and equalizer animations to the running soundtrack.
+* **Natural Completion Reset:** When the track reaches its end, `audioController.resetToPlay()` automatically rewinds to `0:00`, clears the progress bars, and resets all buttons across the UI to the Play state.
+* **Full Browser History Support:** Native browser Back and Forward buttons (`popstate` events) operate seamlessly without interrupting playback.
 
 ---
 
-## 6. Official Social-Sharing Link Preview Image & Metadata
+## 4. Simplified Music Section
 
-To ensure rich, pristine link previews across WhatsApp, iMessage, Twitter/X, LinkedIn, Facebook, Slack, and Discord, the official preview card was generated, optimized, and embedded:
-
-* **Preview Asset Specifications:**
-  * **Filename:** `idu-preview.jpg`
-  * **Format:** JPEG (sRGB)
-  * **Dimensions:** Exactly $1200 \times 1200\text{px}$ ($1:1$ square aspect ratio)
-  * **Optimized File Size:** $283,542\text{ bytes}$ ($276.90\text{ KB}$ — well below the $550\text{ KB}$ ceiling)
-  * **Compression & Quality:** Quality 92 with chroma subsampling preserved for crisp text and vibrant portraits.
-  * **Visual Composition:** Proportional, uncropped capture featuring the official chapter identity lockup, the headline *"Celebrate Our November Celebrants"*, the 3 gold-bordered portrait cards of Chief David Akinwale, Chief Mrs Janet Akintayo, and Chief John Adedeji, and the *"Celebrate With Us"* action button.
-  * **Public Asset Path & URL:**
-    * Local Path: `/public/idu-preview.jpg` (mirrored in `public/assets/idu-preview.jpg` and `dist/idu-preview.jpg`)
-    * Preferred Public URL: `https://idudfwceleb.ai.studio/idu-preview.jpg`
-    * HTTP Response: `200 OK`, `Content-Type: image/jpeg`
-
-* **Open Graph Metadata (`<head>`):**
-  * `og:type`: `website`
-  * `og:url`: `https://idudfwceleb.ai.studio/`
-  * `og:title`: `A November Tribute | IDU Dallas–Fort Worth`
-  * `og:description`: `A November birthday tribute celebrating the distinguished members of Ibadan Descendants Union, Dallas–Fort Worth Chapter.`
-  * `og:image`: `https://idudfwceleb.ai.studio/idu-preview.jpg`
-  * `og:image:secure_url`: `https://idudfwceleb.ai.studio/idu-preview.jpg`
-  * `og:image:width`: `1200`
-  * `og:image:height`: `1200`
-  * `og:image:type`: `image/jpeg`
-  * `og:image:alt`: `Official link preview for Ibadan Descendants Union Dallas–Fort Worth Chapter November birthday celebration honouring Chief David Akinwale, Chief Mrs Janet Akintayo, and Chief John Adedeji.`
-  * `og:site_name`: `IDU Dallas–Fort Worth Chapter`
-
-* **Twitter / X Card Metadata:**
-  * `twitter:card`: `summary_large_image`
-  * `twitter:title`: `A November Tribute | IDU Dallas–Fort Worth`
-  * `twitter:description`: `A November birthday tribute celebrating the distinguished members of Ibadan Descendants Union, Dallas–Fort Worth Chapter.`
-  * `twitter:image`: `https://idudfwceleb.ai.studio/idu-preview.jpg`
-  * `twitter:image:alt`: `Official link preview for Ibadan Descendants Union Dallas–Fort Worth Chapter November birthday celebration honouring Chief David Akinwale, Chief Mrs Janet Akintayo, and Chief John Adedeji.`
-
-* **Production Build Verification:**
-  * Both `dist/idu-preview.jpg` and `dist/assets/idu-preview.jpg` are bundled directly in the production release.
-  * Initial HTML payload contains complete, pre-rendered Open Graph and Twitter Card tags with zero client-side hydration dependency.
+In accordance with specifications, all decorative text, introductory copy, musical notes (`♫`), status tags, and redundant badges were removed from the music section. It now displays **ONLY**:
+1. **Music Title:**
+   > **IDU November Celebration Song** (accompanied by responsive animated equalizer bars).
+2. **Complete Full-Control HTML5 Player:**
+   - Primary Play/Pause toggle with synchronized icon states (`#section-play-btn`).
+   - Elapsed playback time (`#time-current`) and total track duration (`#time-total`, `1:49`).
+   - Scrubbable seek bar with fill progress indicator and drag/touch scrubber (`#progress-container`).
+   - Volume control button with mute toggle and interactive slider (`#volume-slider`).
 
 ---
-*Report updated for Ibadan Descendants Union USA Inc., Dallas–Fort Worth Chapter.*
+
+## 5. SUNEXUS Promotional Section
+
+Placed immediately before the footer, this section is styled as a premium creative-services advert:
+* **Headline:**
+  > **Your Moments Deserve More Than Memories.**
+* **Supporting Narrative:**
+  > *Celebrate people. Preserve legacies. Tell your stories beautifully.*
+  > *SUNEXUS creates personalised digital experiences that bring birthdays, anniversaries, family celebrations, tributes and special occasions to life.*
+* **Highlighted Creative Services:**
+  1. Bespoke tribute and celebration websites.
+  2. Creative branding and visual design.
+  3. Custom tribute music and audio production.
+  4. Digital storytelling and photography galleries.
+  5. Website development and digital solutions.
+* **Brand Statement:**
+  > **SUNEXUS — Build. Innovate. Grow. Secure.**
+* **Closing Message:**
+  > *"Let's create something worth remembering."*
+  > *A creative technology brand by **Uthman Adesola**.*
+* **Call to Action:**
+  - **Action Button:** `Create Your Own Celebration →`
+  - **URL Notice:** As instructed, because an official SUNEXUS domain was not provided in the project files, the CTA links directly to the official creative consultation WhatsApp channel (`https://wa.me/2349036066187?text=Hello%20SUNEXUS%2C%20I%20would%20like%20to%20create%20a%20celebration%20experience`).
+
+---
+
+## 6. Professional Footer & Credits
+
+The footer has been updated to an organized, 3-column responsive layout:
+1. **Union Identity:**
+   - Official IDU Dallas–Fort Worth Chapter logo and mission statement.
+2. **Production & Creative Credits:**
+   - **Website Designed By:**
+     **Uthman Adesola**
+     *Creative Director, SUNEXUS | Brand Identity Designer | Digital Solutions Innovator.*
+   - **Music Created By:**
+     **Uthman Adesola**
+     *Music Production | Creative Direction | Digital Media.*
+3. **Direct Contact & WhatsApp Consultation:**
+   - Recognizable green WhatsApp badge with clickable link to `https://wa.me/2349036066187` (+234 903 606 6187).
+   - Works across desktop and mobile devices.
+4. **Bottom Bar:**
+   - Dynamic Copyright: `© <span class="current-year"></span> Ibadan Descendants Union, Dallas. All rights reserved.`
+   - Discreet credit: *A bespoke digital experience powered by **SUNEXUS**.*
+
+---
+
+## 7. Bespoke Brand-Native Dark Theme & Invented Toggle
+
+### A. Color Palette Alignment
+The dark theme is architected entirely using the established IDU Dallas–Fort Worth brand colors, delivering a regal evening gala ambience without artificial black-and-white or generic purple gradients:
+* **Background Paper Canvas:** Deep midnight royal forest (`#081611`).
+* **Card & Container Surfaces:** Emerald velvet container backgrounds (`#0d231b` / `#0f2920`) with 1px semi-translucent gold borders (`rgba(201, 155, 75, 0.4)`).
+* **Warm Royal Golds:** Warm royal gold accents (`#c99b4b`), soft golden highlights (`#e7cb91`), and amber button borders.
+* **Typographic Hierarchy & Readability:** Off-white ivory headlines (`#ffffff`), warm cream editorial body copy (`#f2eee5`), and muted champagne metadata text (`#a4b8af`).
+* **Section-Specific Adaptations:** Harmonious night-mode adaptations for the sticky navigation header, celebrants 3-column feature cards, full-control music player, closing blessing box, SUNEXUS promo card, and high-fidelity tribute gallery lightboxes.
+
+### B. Invented Brand-Native Toggle Button
+* **Placement & Sizing:** Positioned in the sticky navbar `.header-actions` right next to the circular navbar music player button (`#nav-music-btn`), preserving symmetrical elegance across desktop and mobile.
+* **Aesthetic:** A circular $36\text{px} \times 36\text{px}$ button bordered in royal gold with a subtle emerald drop shadow and warm golden hover-glow.
+* **Morphing Glyphs:** Dynamically presents an amber Moon icon in light mode (indicating "switch to dark theme") and an illuminated Sun icon in dark mode (indicating "switch to light theme").
+* **Accessibility:** Full keyboard navigability (`Tab` / `Enter` / `Space`), active pressed states, and dynamic `aria-label`, `title`, and `aria-pressed` state announcements.
+
+### C. Zero Flash of Unstyled Theme (FOUT) & Persistent State
+* **Head-Mounted Script:** Every HTML page (`index.html`, `tribute-david-akinwale.html`, `tribute-janet-apesinola.html`, and `tribute-john-adeniji.html`) contains an inline script in `<head>` that immediately evaluates `localStorage.getItem('idu-theme')` or system `window.matchMedia('(prefers-color-scheme: dark)')` before the DOM renders, completely preventing any white flash.
+* **Seamless Router Integration:** The theme state is preserved across client-side page transitions without interrupting persistent audio playback.
+
+---
+
+---
+
+## 8. Chief (Mrs.) Janet's Personal Tribute Gallery Integration
+
+### A. Photographic Asset Integration
+All five enhanced photographs from `chief_mrs_janet_gallery_edited.zip` were extracted with original filenames preserved and integrated into both `public/assets/` and `assets/`:
+1. `chief_mrs_janet_gallery_01.jpg` (240 KB, 865 × 1536) — *01. Together in Love and Purpose*
+2. `chief_mrs_janet_gallery_02.jpg` (579 KB, 1152 × 1536) — *02. Grace in Every Season*
+3. `chief_mrs_janet_gallery_03.jpg` (202 KB, 709 × 1536) — *03. Joy in Her Presence*
+4. `chief_mrs_janet_gallery_04.jpg` (469 KB, 1024 × 1536) — *04. A Mother's Pride*
+5. `chief_mrs_janet_gallery_05.jpg` (682 KB, 1152 × 1536) — *05. A Beautiful Journey Together*
+
+### B. Gallery Heading & Editorial Narrative
+* **Gallery Heading:**
+  > **A Life of Grace, Love & Beautiful Memories**
+* **Supporting Text:**
+  > *A collection of cherished moments celebrating the elegance, family, relationships and joyful experiences that make Chief Mrs. Janet's story special.*
+
+### C. Responsive Photographic Cards & Typography
+* **Responsive Layout:** Responsive CSS Grid (`repeat(auto-fit, minmax(320px, 1fr))`, 3 columns on desktop) with vertical portrait media frames (`aspect-ratio: 4 / 4.8`) ensuring zero distortion, stretching, or unwanted face cropping.
+* **Refined Editorial Typography:** Gold numerical pill badges (`Moment 01` to `Moment 05`), serif headings in Playfair Display, and legible supporting narrative in DM Sans.
+* **Subtle Hover Effects:** Smooth card elevation (`translateY(-5px)`), golden border illumination, image scaling (`scale(1.04)`), and hover badges.
+* **Full Dark & Light Theme Harmony:** Complete styling in light mode (warm ivory cards) and dark mode (dark emerald velvet `#0d231b` with gold borders).
+
+### D. Full-Screen Interactive Lightbox Carousel
+* **Seamless Fullscreen Experience:** High-definition presentation with dark backdrop blur (`rgba(5, 14, 11, 0.96)`).
+* **Previous & Next Navigation:** Circular gold-rimmed buttons (`#lightbox-prev-btn`, `#lightbox-next-btn`) with smooth wrapping and opacity cross-fades.
+* **Photo Counter & Titles:** Dynamic photo counters (e.g. `Photo 1 of 5`) and titles displayed alongside full captions.
+* **Keyboard Accessibility:** Arrow keys (`ArrowLeft` / `ArrowRight`) to navigate, `Escape` to close.
+* **Mobile Touch Navigation:** Touch swipe gestures enabled (`touchstart` / `touchend`) for intuitive horizontal mobile swiping.
+
+---
+
+---
+
+## 9. Celebrant Card Full Clickability & Direct Gallery Access Architecture
+
+### A. Entire Celebrant Profile Cards Independently Clickable
+* **Full-Surface Navigation:** Each profile card in the Celebrants section (`#celebrants`) is an independent `<a>` anchor pointing to its corresponding celebrant's tribute page:
+  - **Chief David Akinwale Card** (`#celebrant-card-akinwale`) &rarr; `tribute-david-akinwale.html`
+  - **Chief (Mrs.) Janet Apesinola Card** (`#celebrant-card-apesinola`) &rarr; `tribute-janet-apesinola.html`
+  - **Chief John Adeniji Card** (`#celebrant-card-adeniji`) &rarr; `tribute-john-adeniji.html`
+* **Zero Layout Alteration:** Preserves the exact 3-card horizontal grid, portrait aspect ratios, dates, and typography without shifting layout.
+* **Unified Hover & Focus Sync:** Hovering or focusing anywhere on a celebrant's card (portrait, title, blurb, or CTA) activates the unified elevation (`translateY(-5px)`), gold border glow, image scale, and CTA arrow translation (`translateX(4px)`).
+* **Keyboard & Touch Accessibility:** Full keyboard focus (`Tab`), activation (`Enter` / `Space`), pointer cursors, and mobile tap targets.
+* **Seamless Audio Continuity:** Integrated with the application's persistent router (`navigatePage`), allowing visitors to transition to any tribute page without interrupting the tribute song.
+
+### B. "Explore Photo Gallery" Button on Each Personal Tribute Page
+* **Placement:** Positioned immediately beneath the celebrant's portrait and quick-facts profile card inside `<aside class="tribute-sticky-col">`.
+* **Design & Branding:** Styled in IDU royal forest green (`var(--forest)` / `var(--forest-2)`), bordered with gold (`var(--gold)`), featuring a gallery frame icon and directional arrow.
+* **Functionality:** Smoothly scrolls visitors directly down to that specific celebrant's photo gallery (`#gallery`), applies an elegant golden pulse animation (`gallerySectionPulse`), and focuses the first gallery item for immediate browsing.
+* **Independent Mapping:** Each button scrolls strictly to the gallery belonging to that specific celebrant on their respective page.
+* **Graceful Empty State:** If any celebrant does not yet have uploaded gallery photographs, the gallery displays a graceful empty state notice: *"No photographs have been added to this gallery yet. Please check back soon."*
+
+---
+
+## 10. Verification Matrix
+
+| Verification Check | Target / Endpoint | Result |
+| :--- | :--- | :--- |
+| **TypeScript Compilation** | `tsc --noEmit` | **PASSED** (0 errors) |
+| **Vite Multi-Page Build** | `npm run build` | **PASSED** (`dist/` generated with 4 HTML pages & all gallery assets) |
+| **All Celebrant Cards Clickable** | 3 feature cards in `#celebrants` | **PASSED** (Entire card surface independently navigates to corresponding tribute page) |
+| **Card Independence** | Akinwale &rarr; Akinwale, Janet &rarr; Janet, Adeniji &rarr; Adeniji | **PASSED** (Strict 1-to-1 celebrant mapping) |
+| **Card Layout Preservation** | 3-column horizontal grid, dimensions, names | **PASSED** (Layout untouched, responsive across devices) |
+| **Explore Photo Gallery Button** | All 3 tribute pages beneath portrait & profile | **PASSED** (Smooth scroll, focus, and golden highlight) |
+| **Gallery Independence** | Each tribute page navigates to its own gallery | **PASSED** (No homepage redirect or cross-celebrant mixup) |
+| **Empty State Fallback** | All galleries have empty-state messaging | **PASSED** (*"No photographs have been added to this gallery yet."*) |
+| **Fullscreen Lightbox Carousel** | Prev/Next buttons, counter, titles, touch swipe | **PASSED** (Seamless carousel navigation) |
+| **Music Continuity** | Route changes `index.html` ↔ `tribute-*.html` | **PASSED** (Audio continues uninterrupted without reload) |
+| **Playback Synchronization** | All 5 play/pause buttons & status | **PASSED** (Instant icon & time synchronization) |
+| **Dark Theme & Toggle** | Theme toggle across all 4 pages | **PASSED** (Persistent night mode across routes) |
+| **Professional Footer & Credits** | Credits, dynamic year, WhatsApp link | **PASSED** (`https://wa.me/2349036066187`) |
+
+
+
+
+| **Chief David Gallery Integration** | 2 personal photographs + captions + lightbox | **PASSED** (`chief-david-01.jpg`, `chief-david-02.jpg`) |
+| **Chief John Gallery Integration** | 2 personal photographs + captions + lightbox | **PASSED** (`chief-john-01.jpg`, `chief-john-02.jpg`) |
+
+---
+
+## 11. Celebrant Photo Gallery Update: Chief David & Chief John
+
+### A. Chief David Akinwale's Personal Tribute Gallery
+Integrated from archive `idudfw_celebrants_gallery_images.zip`:
+* **Photograph 1: A Portrait of Distinction** (`chief-david-01.jpg`)
+  - **Title:** *01. A Portrait of Distinction*
+  - **Caption:** *"A distinguished portrait capturing Chief David's formal appearance and personality."*
+  - **Format:** High-resolution vertical portrait in grey suit with Lions Club lapel pin.
+* **Photograph 2: Celebrating Culture and Togetherness** (`chief-david-02.jpg`)
+  - **Title:** *02. Celebrating Culture and Togetherness*
+  - **Caption:** *"A beautiful moment in traditional Yoruba attire, celebrating culture, elegance and togetherness."*
+  - **Format:** High-resolution portrait in traditional aso oke and coral beads with his partner.
+
+### B. Chief John Adeniji's Personal Tribute Gallery
+Integrated from archive `idudfw_celebrants_gallery_images.zip`:
+* **Photograph 1: Elegance in Tradition** (`chief-john-01.jpg`)
+  - **Title:** *01. Elegance in Tradition*
+  - **Caption:** *"A portrait celebrating Chief John's elegance in traditional Yoruba attire."*
+  - **Format:** High-resolution portrait in traditional Yoruba agbada with coral neck beads and fila.
+* **Photograph 2: A Moment of Adventure** (`chief-john-02.jpg`)
+  - **Title:** *02. A Moment of Adventure*
+  - **Caption:** *"A relaxed lifestyle portrait capturing Chief John's personality and appreciation for adventure."*
+  - **Format:** High-resolution relaxed lifestyle portrait on a touring motorcycle.
+
+### C. Layout, Carousel & Lightbox Enhancements
+* **Balanced 2-Item Responsive Grid:** Added `.tribute-personal-gallery-grid.two-items` styling ensuring the two photographs form a centered, harmonious 2-column layout on desktop and tablet.
+* **Full-Screen Lightbox Carousel:** Dynamic image viewer with next/previous controls, responsive counter ("Photo 1 of 2"), title & caption strip, keyboard navigation (Escape, Left, Right), and mobile touch swipe gestures.
+* **Asset Organization:** Both `/public/assets/` and `/assets/` directories hold the original high-resolution JPG files, resolving seamlessly across Vite development and production builds.
